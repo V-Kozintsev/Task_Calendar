@@ -1,7 +1,7 @@
 import { sum } from "./sum";
 
-describe("sum", () => {
-  it("sum a + b", () => {
-    expect(sum(2, 7)).toBe(9);
+describe("dsum", () => {
+  it("описание", () => {
+    expect(sum(2, 3)).toBe(5);
   });
 });
