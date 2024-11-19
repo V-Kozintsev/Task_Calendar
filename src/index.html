@@ -3,11 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Календарь на TypeScript</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Календарь с задачами</title>
   </head>
   <body>
-    <h1>Календарь</h1>
-    <button id="btn">Кнопка</button>
+    <div class="container">
+      <div class="box">
+        <div class="box-mouth">
+          <button id="btn-back">назад</button>
+          <div class="mouth">Ноябрь</div>
+          <button id="btn-next">вперед</button>
+        </div>
+
+        <table>
+          <tr>
+            <th class="weeks">ПН</th>
+            <th class="weeks">ВТ</th>
+            <th class="weeks">СР</th>
+            <th class="weeks">ЧТ</th>
+            <th class="weeks">ПТ</th>
+            <th class="weeks">СБ</th>
+            <th class="weeks">ВС</th>
+          </tr>
+          <tr>
+            <td class="day">1</td>
+            <td class="day">2</td>
+            <td class="day">3</td>
+            <td class="day">4</td>
+            <td class="day">5</td>
+            <td class="day">6</td>
+            <td class="day">7</td>
+          </tr>
+          <tr>
+            <td class="day">8</td>
+            <td class="day">9</td>
+            <td class="day">10</td>
+            <td class="day">11</td>
+            <td class="day">12</td>
+            <td class="day">13</td>
+            <td class="day">14</td>
+          </tr>
+          <tr>
+            <td class="day">15</td>
+            <td class="day">16</td>
+            <td class="day">17</td>
+            <td class="day">18</td>
+            <td class="day">19</td>
+            <td class="day">20</td>
+            <td class="day">21</td>
+          </tr>
+          <tr>
+            <td class="day">22</td>
+            <td class="day">23</td>
+            <td class="day">24</td>
+            <td class="day">25</td>
+            <td class="day">26</td>
+            <td class="day">27</td>
+            <td class="day">28</td>
+          </tr>
+          <tr>
+            <td class="day">29</td>
+            <td class="day">30</td>
+            <td class="day">31</td>
+            <td class="day"></td>
+            <td class="day"></td>
+            <td class="day"></td>
+            <td class="day"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </body>
 </html>
