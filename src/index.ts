@@ -212,6 +212,7 @@ function updateTask(): void {
     });
     currentButton.appendChild(divDayR);
   });
+  //изменения
 }
 
 function renderCalendar(): void {
