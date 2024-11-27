@@ -3,73 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Календарь с задачами</title>
+
+    <title>Календарь</title>
   </head>
   <body>
     <div class="container">
-      <div class="box">
-        <div class="box-mouth">
-          <button id="btn-back">назад</button>
-          <div class="mouth">Ноябрь</div>
-          <button id="btn-next">вперед</button>
+      <div class="overlay" id="overlay"></div>
+      <div class="calendar">
+        <div class="header">
+          <button id="prevMonth">Предыдущий месяц</button>
+          <h2 class="monthYear" id="monthYear"></h2>
+          <button id="nextMonth">Следующий месяц</button>
         </div>
+        <div class="days-weeks">
+          <div class="day-name">Пн</div>
+          <div class="day-name">Вт</div>
+          <div class="day-name">Ср</div>
+          <div class="day-name">Чт</div>
+          <div class="day-name">Пт</div>
+          <div class="day-name">Сб</div>
+          <div class="day-name">Вс</div>
+        </div>
+        <div id="dates" class="dates"></div>
+      </div>
+    </div>
 
-        <table>
-          <tr>
-            <th class="weeks">ПН</th>
-            <th class="weeks">ВТ</th>
-            <th class="weeks">СР</th>
-            <th class="weeks">ЧТ</th>
-            <th class="weeks">ПТ</th>
-            <th class="weeks">СБ</th>
-            <th class="weeks">ВС</th>
-          </tr>
-          <tr>
-            <td class="day">1</td>
-            <td class="day">2</td>
-            <td class="day">3</td>
-            <td class="day">4</td>
-            <td class="day">5</td>
-            <td class="day">6</td>
-            <td class="day">7</td>
-          </tr>
-          <tr>
-            <td class="day">8</td>
-            <td class="day">9</td>
-            <td class="day">10</td>
-            <td class="day">11</td>
-            <td class="day">12</td>
-            <td class="day">13</td>
-            <td class="day">14</td>
-          </tr>
-          <tr>
-            <td class="day">15</td>
-            <td class="day">16</td>
-            <td class="day">17</td>
-            <td class="day">18</td>
-            <td class="day">19</td>
-            <td class="day">20</td>
-            <td class="day">21</td>
-          </tr>
-          <tr>
-            <td class="day">22</td>
-            <td class="day">23</td>
-            <td class="day">24</td>
-            <td class="day">25</td>
-            <td class="day">26</td>
-            <td class="day">27</td>
-            <td class="day">28</td>
-          </tr>
-          <tr>
-            <td class="day">29</td>
-            <td class="day">30</td>
-            <td class="day">31</td>
-            <td class="day"></td>
-            <td class="day"></td>
-            <td class="day"></td>
-            <td class="day"></td>
-          </tr>
-        </table>
+    <div id="task-popup" class="popup">
+      <div class="popup-content">
+        <span class="close-btn">&times;</span>
+        <div class="box-btn"></div>
+
+        <input
+          type="text"
+          class="task-title"
+          id="task-title"
+          placeholder="Заголовок"
+          required
+        />
+        <textarea
+          class="task-title"
+          id="task-description"
+          placeholder="Описание"
+          required
+        ></textarea>
+        <div class="box-task"></div>
+        <button id="save-task-btn">Создать</button>
+        <div class="currentTask_container"></div>
       </div>
     </div>
   </body>

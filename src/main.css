@@ -1,66 +1,127 @@
 * {
   box-sizing: border-box;
-  margin: 0;
   padding: 0;
+  margin: 0;
+}
+body {
+  position: relative;
+  height: 100vh;
+  background-size: cover;
+}
+.calendar {
+  margin: 0 auto;
 }
 .container {
-  height: 90vh;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.days-weeks {
+  display: flex;
+}
+.dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.days-weeks {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day-name {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.days {
+  width: 80px;
+  height: 80px;
+  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  text-align: end;
 }
-.box {
-  width: 90%;
-  height: 100%;
+.days:hover {
+  background-color: aqua;
+  cursor: pointer;
 }
-table {
-  border-collapse: collapse;
+.popup-content {
+  display: flex;
+  flex-direction: column;
+}
+.task-title {
+  margin: 10px 0;
+  border: 1px solid black;
+  padding: 10px;
   text-align: center;
+}
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 20%;
+  z-index: 1000;
+}
+.overlay {
+  display: none;
   width: 100%;
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgb(43, 43, 43);
+  opacity: 0.8;
 }
-.box-mouth {
+.box-btn {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
+  justify-content: space-between;
 }
-#btn-back,
-#btn-next {
-  padding: 10px;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
+.show {
+  display: block;
 }
-#btn-back:hover,
-#btn-next:hover {
-  cursor: pointer;
-  background-color: black;
-  color: white;
-}
-.mouth {
-  font-size: 50px;
-  font-family: Arial, Helvetica, sans-serif;
-  margin-left: 40px;
-  margin-right: 40px;
-}
-.weeks {
-  font-size: 30px;
-  font-family: Arial, Helvetica, sans-serif;
-  width: 14.28%; /* Четыре ячейки на строку, 100% / 7 */
-  height: 5%;
-}
-.day {
+.box-task {
   border: 1px solid black;
-  font-size: 18px;
-  width: 14.28%; /* Четыре ячейки на строку, 100% / 7 */
-  height: 10%;
+  text-align: center;
+  margin-bottom: 10px;
 }
-.day:hover {
-  background-color: green;
+.added-task {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.task-indicator {
+  color: green;
+}
+.close-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   cursor: pointer;
+  width: 20px;
+  height: 20px;
+  font-size: 28px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+.close-btn:hover {
+  color: blue;
+  font-weight: 900;
+  font-size: 38px;
 }
