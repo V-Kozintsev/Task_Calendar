@@ -29,27 +29,29 @@
     </div>
 
     <div id="task-popup" class="popup">
-      <div class="popup-content">
-        <span class="close-btn">&times;</span>
-        <div class="box-btn"></div>
+      <form id="save-task-form">
+        <div class="popup-content">
+          <span class="close-btn">&times;</span>
+          <div class="box-btn"></div>
 
-        <input
-          type="text"
-          class="task-title"
-          id="task-title"
-          placeholder="Заголовок"
-          required
-        />
-        <textarea
-          class="task-title"
-          id="task-description"
-          placeholder="Описание"
-          required
-        ></textarea>
-        <div class="box-task"></div>
-        <button id="save-task-btn">Создать</button>
-        <div class="currentTask_container"></div>
-      </div>
+          <input
+            type="text"
+            class="task-title"
+            id="task-title"
+            placeholder="Заголовок"
+            required
+          />
+          <textarea
+            class="task-title"
+            id="task-description"
+            placeholder="Описание"
+            required
+          ></textarea>
+          <div class="box-task"></div>
+          <button id="save-task-btn">Создать</button>
+          <div class="currentTask_container"></div>
+        </div>
+      </form>
     </div>
   </body>
 </html>
