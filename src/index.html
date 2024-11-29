@@ -1,57 +1,35 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Календарь</title>
+    <title>Document</title>
   </head>
   <body>
-    <div class="container">
-      <div class="overlay" id="overlay"></div>
-      <div class="calendar">
-        <div class="header">
-          <button id="prevMonth">Предыдущий месяц</button>
-          <h2 class="monthYear" id="monthYear"></h2>
-          <button id="nextMonth">Следующий месяц</button>
+    <div class="container_calendar">
+      <div class="container_calendar__box-header">
+        <div class="container_calendar__box-header_btn-month">
+          <button class="prev_month_btn">назад</button>
+          <button class="next_month_btn">вперед</button>
+          <div class="month">Ноябрь</div>
         </div>
-        <div class="days-weeks">
-          <div class="day-name">Пн</div>
-          <div class="day-name">Вт</div>
-          <div class="day-name">Ср</div>
-          <div class="day-name">Чт</div>
-          <div class="day-name">Пт</div>
-          <div class="day-name">Сб</div>
-          <div class="day-name">Вс</div>
+        <div class="container_calendar__box-header_btn-task-calendar">
+          <button class="calendar">календарь</button>
+          <button class="task">задачи</button>
         </div>
-        <div id="dates" class="dates"></div>
       </div>
-    </div>
-
-    <div id="task-popup" class="popup">
-      <form id="save-task-form">
-        <div class="popup-content">
-          <span class="close-btn">&times;</span>
-          <div class="box-btn"></div>
-
-          <input
-            type="text"
-            class="task-title"
-            id="task-title"
-            placeholder="Заголовок"
-            required
-          />
-          <textarea
-            class="task-title"
-            id="task-description"
-            placeholder="Описание"
-            required
-          ></textarea>
-          <div class="box-task"></div>
-          <button id="save-task-btn">Создать</button>
-          <div class="currentTask_container"></div>
-        </div>
-      </form>
+      <div class="container_calendar__box-center">
+        <ul class="container_calendar__box-weeks">
+          <li class="days-weeks">Пн</li>
+          <li class="days-weeks">Вт</li>
+          <li class="days-weeks">Ср</li>
+          <li class="days-weeks">Чт</li>
+          <li class="days-weeks">Пт</li>
+          <li class="days-weeks">Сб</li>
+          <li class="days-weeks">Вс</li>
+        </ul>
+        <div class="container_calendar__box-day"></div>
+      </div>
     </div>
   </body>
 </html>

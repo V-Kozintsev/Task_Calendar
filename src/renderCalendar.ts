@@ -1,61 +1,18 @@
-import {
-  emptyCells,
-  monthYear,
-  currentDates,
-  overlay,
-  popup,
-  setSelectedDate,
-} from ".";
-import { calendarApi } from "./api";
-import { updateTask } from "./updateTask";
+const currentDate = new Date();
+const month = currentDate.getMonth();
+const year = currentDate.getFullYear();
 
-export async function renderCalendar() {
-  if (!emptyCells || !monthYear) return;
-
-  emptyCells.innerHTML = "";
-
-  const month: number = currentDates.getMonth();
-  const year: number = currentDates.getFullYear();
-  const lastDayMonth: number = new Date(year, month + 1, 0).getDate();
-  const firstDayIndex: number = new Date(year, month, 1).getDay();
-  const weeks: number = (firstDayIndex + 6) % 7;
-
-  monthYear.textContent = currentDates.toLocaleDateString("ru-RU", {
-    month: "long",
-    year: "numeric",
-  });
-
-  for (let i = 0; i < weeks; i++) {
-    const divDay: HTMLDivElement = document.createElement("div");
-    divDay.className = "days";
-    emptyCells.appendChild(divDay);
+export function renderCalendar() {
+  //цикл создает 35 ячеек с номерами
+  for (let cells = 1; cells <= 35; ++cells) {
+    const dayBox: Element | null = document.querySelector(
+      ".container_calendar__box-day",
+    );
+    const daysCells: HTMLDivElement = document.createElement("div");
+    daysCells.className = "days";
+    dayBox?.appendChild(daysCells);
+    daysCells.textContent = cells.toString();
   }
-
-  for (let day = 1; day <= lastDayMonth; day++) {
-    const divDay: HTMLDivElement = document.createElement("div");
-    divDay.className = "days";
-    divDay.textContent = day.toString();
-
-    const dateKey: string = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    const dayTasks = await calendarApi.getForDate(dateKey);
-
-    if (dayTasks.length > 0) {
-      dayTasks.forEach((task) => {
-        const taskIndicator: HTMLDivElement = document.createElement("div");
-        taskIndicator.className = "task-indicator";
-        taskIndicator.textContent = task.title; // Показываем только заголовок задачи
-        divDay.appendChild(taskIndicator);
-      });
-    }
-
-    emptyCells.appendChild(divDay);
-    divDay.addEventListener("click", () => {
-      if (overlay && popup) {
-        overlay.classList.add("show");
-        popup.classList.add("show");
-        setSelectedDate(dateKey);
-        updateTask();
-      }
-    });
-  }
+  const a = new Date(month, year);
+  console.log(a);
 }
