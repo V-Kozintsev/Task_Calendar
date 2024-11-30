@@ -1,10 +1,8 @@
 const currentDate = new Date();
 let month: number = currentDate.getMonth();
 let year = currentDate.getFullYear();
-const weeks = currentDate.getDay();
-console.log(currentDate);
-
-/* const firstDay = new Date(year, month, 1); */
+const firstDayIndex: number = new Date(year, month, 1).getDay();
+const weeks: number = (firstDayIndex + 6) % 7;
 
 export function renderCalendar() {
   let lastDay = new Date(year, month + 1, 0);
@@ -20,11 +18,11 @@ export function renderCalendar() {
   const dayBox: HTMLElement | null = document.querySelector(
     ".container_calendar__box-day",
   );
+  //цикл создает нужное колиство ячеек предыдущего цикла
   for (let prevCells = 0; prevCells < weeks; prevCells++) {
     const daysCells: HTMLDivElement = document.createElement("div");
     daysCells.className = "days";
     dayBox?.appendChild(daysCells);
-    console.log(prevCells);
   }
   //цикл создает нужное колиство ячеек
   for (let cells = 1; cells <= lastDate; cells++) {
@@ -54,6 +52,13 @@ export function renderCalendar() {
       }
       lastDay = new Date(year, month + 1, 0);
       lastDate = lastDay.getDate();
+      const firstDayIndex: number = new Date(year, month, 1).getDay();
+      const weeks: number = (firstDayIndex + 6) % 7;
+      for (let prevCells = 0; prevCells < weeks; prevCells++) {
+        const daysCells: HTMLDivElement = document.createElement("div");
+        daysCells.className = "days";
+        dayBox?.appendChild(daysCells);
+      }
       for (let cells = 1; cells <= lastDate; cells++) {
         const daysCells: HTMLDivElement = document.createElement("div");
         daysCells.className = "days";
@@ -83,6 +88,13 @@ export function renderCalendar() {
       }
       lastDay = new Date(year, month + 1, 0);
       lastDate = lastDay.getDate();
+      const firstDayIndex: number = new Date(year, month, 1).getDay();
+      const weeks: number = (firstDayIndex + 6) % 7;
+      for (let prevCells = 0; prevCells < weeks; prevCells++) {
+        const daysCells: HTMLDivElement = document.createElement("div");
+        daysCells.className = "days";
+        dayBox?.appendChild(daysCells);
+      }
       for (let cells = 1; cells <= lastDate; cells++) {
         const daysCells: HTMLDivElement = document.createElement("div");
         daysCells.className = "days";

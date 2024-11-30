@@ -43,7 +43,7 @@ li {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 5fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   padding: 10px;
 }
 .container_calendar__box-weeks {
@@ -63,7 +63,7 @@ li {
 .days:first-child {
   border-top-left-radius: 15px;
 }
-.days:nth-child(29) {
+.days:nth-child(36) {
   border-bottom-left-radius: 15px;
 }
 .days:nth-child(7) {
