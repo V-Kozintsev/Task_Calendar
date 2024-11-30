@@ -24,6 +24,11 @@ li {
 .container_calendar__box-header_btn-month {
   display: flex;
 }
+.month {
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
 .next_month_btn {
   margin: 0px 30px;
 }
