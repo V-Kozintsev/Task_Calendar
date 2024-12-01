@@ -18,11 +18,18 @@ export function renderCalendar() {
   const dayBox: HTMLElement | null = document.querySelector(
     ".container_calendar__box-day",
   );
-  //цикл создает нужное колиство ячеек предыдущего цикла
+  let newD = lastDate;
+
+  //цикл создает нужное колиство ячеек предыдущего месяца
   for (let prevCells = 0; prevCells < weeks; prevCells++) {
     const daysCells: HTMLDivElement = document.createElement("div");
     daysCells.className = "days";
     dayBox?.appendChild(daysCells);
+    newD--;
+
+    console.log(newD);
+
+    daysCells.textContent = newD.toString();
   }
   //цикл создает нужное колиство ячеек
   for (let cells = 1; cells <= lastDate; cells++) {
@@ -31,6 +38,7 @@ export function renderCalendar() {
     dayBox?.appendChild(daysCells);
     daysCells.textContent = cells.toString();
   }
+
   //кнопка для пеерехода на следующий месяц
   function btnNextMonthYear() {
     document.querySelector(".next_month_btn")?.addEventListener("click", () => {
