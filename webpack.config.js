@@ -16,10 +16,15 @@ const config = {
   devServer: {
     open: true,
     host: "localhost",
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
+    }),
+    new HtmlWebpackPlugin({
+      template: "./src/task.html", // Обеспечьте создание страниц через Webpack
+      filename: "task.html",
     }),
 
     new MiniCssExtractPlugin(),

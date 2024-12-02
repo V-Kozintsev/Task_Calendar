@@ -17,6 +17,7 @@ export function renderCalendar() {
       year: "numeric",
     });
   }
+
   const dayBox: HTMLElement | null = document.querySelector(
     ".container_calendar__box-day",
   );
@@ -29,19 +30,43 @@ export function renderCalendar() {
     prevDayMonth++;
     daysCells.textContent = prevDayMonth.toString();
   }
-
-  //цикл создает нужное колиство ячеек
+  const monthCurrent = currentDate.toLocaleString("ru-Ru", { month: "long" });
+  const yearCurrent = currentDate.getFullYear();
+  const dayCurrent = currentDate.getDate();
+  //цикл создает нужное колиство ячеек текущего месяца
   for (let cells = 1; cells <= lastDate; cells++) {
     const daysCells: HTMLDivElement = document.createElement("div");
+    const daysCellsDay: HTMLDivElement = document.createElement("div");
+
     daysCells.className = "days";
+    daysCellsDay.className = "dayInCells";
+
     dayBox?.appendChild(daysCells);
-    daysCells.textContent = cells.toString();
+    daysCells.appendChild(daysCellsDay);
+    //создаем блок для добавления задачи в ячейке
+    const taskCellsDay: HTMLDivElement = document.createElement("div");
+    taskCellsDay.className = "taskInCells";
+    daysCells.appendChild(taskCellsDay);
+    taskCellsDay.textContent = "задача с заголовком";
+    //создаем блок для добавления задачи в ячейке
+    currentClickDiv(daysCells, daysCellsDay);
+
+    daysCellsDay.textContent = cells.toString();
+
+    if (
+      monthRender &&
+      cells === dayCurrent &&
+      monthRender.textContent === `${monthCurrent} ${yearCurrent} г.`
+    ) {
+      daysCellsDay.classList.add("currentDay");
+    }
   }
 
+  //цикл создает нужное колиство ячеек следующего месяца
   const allDivDays = document.querySelectorAll(".days");
   const nextDay = new Date(year, month + 1, 1);
   let nextN = nextDay.getDate();
-  //цикл создает нужное колиство ячеек следующего месяца
+
   for (let nextCells = allDivDays.length; nextCells < 42; nextCells++) {
     const daysCells: HTMLDivElement = document.createElement("div");
     daysCells.className = "days daysPrevNext";
@@ -82,12 +107,30 @@ export function renderCalendar() {
         prevDayMonth++;
         daysCells.textContent = prevDayMonth.toString();
       }
+      const monthCurrent = currentDate.toLocaleString("ru-Ru", {
+        month: "long",
+      });
+      const yearCurrent = currentDate.getFullYear();
+      const dayCurrent = currentDate.getDate();
+      //цикл создает нужное колиство ячеек текущего месяца
       for (let cells = 1; cells <= lastDate; cells++) {
         const daysCells: HTMLDivElement = document.createElement("div");
+        const daysCellsDay: HTMLDivElement = document.createElement("div");
         daysCells.className = "days";
+        daysCellsDay.className = "dayInCells";
         dayBox?.appendChild(daysCells);
-        daysCells.textContent = cells.toString();
+        daysCells.appendChild(daysCellsDay);
+        daysCellsDay.textContent = cells.toString();
+
+        if (
+          monthRender &&
+          cells === dayCurrent &&
+          monthRender.textContent === `${monthCurrent} ${yearCurrent} г.`
+        ) {
+          daysCellsDay.classList.add("currentDay");
+        }
       }
+
       const allDivDays = document.querySelectorAll(".days");
       const nextDay = new Date(year, month + 1, 1);
       let nextN = nextDay.getDate();
@@ -133,11 +176,28 @@ export function renderCalendar() {
         prevDayMonth++;
         daysCells.textContent = prevDayMonth.toString();
       }
+      const monthCurrent = currentDate.toLocaleString("ru-Ru", {
+        month: "long",
+      });
+      const yearCurrent = currentDate.getFullYear();
+      const dayCurrent = currentDate.getDate();
+      //цикл создает нужное колиство ячеек текущего месяца
       for (let cells = 1; cells <= lastDate; cells++) {
         const daysCells: HTMLDivElement = document.createElement("div");
+        const daysCellsDay: HTMLDivElement = document.createElement("div");
         daysCells.className = "days";
+        daysCellsDay.className = "dayInCells";
         dayBox?.appendChild(daysCells);
-        daysCells.textContent = cells.toString();
+        daysCells.appendChild(daysCellsDay);
+        daysCellsDay.textContent = cells.toString();
+
+        if (
+          monthRender &&
+          cells === dayCurrent &&
+          monthRender.textContent === `${monthCurrent} ${yearCurrent} г.`
+        ) {
+          daysCellsDay.classList.add("currentDay");
+        }
       }
       const allDivDays = document.querySelectorAll(".days");
       const nextDay = new Date(year, month + 1, 1);
@@ -153,4 +213,11 @@ export function renderCalendar() {
     });
   }
   btnPrevMonthYear();
+}
+
+function currentClickDiv(cell: HTMLDivElement, day: HTMLDivElement) {
+  // Добавляем обработчик события клика для переданной ячейки
+  cell.addEventListener("click", () => {
+    console.log("Кликнули по дню:", cell, day);
+  });
 }
