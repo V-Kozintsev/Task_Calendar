@@ -54,12 +54,17 @@ li {
   font-size: 20px;
 }
 .days {
-  padding: 10px;
+  padding: 1px;
   border: 1px solid rgb(167, 167, 167);
   background-color: white;
   display: flex;
   align-items: start;
   justify-content: center;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+  display: table-column;
+  text-align: center;
 }
 .days:hover {
   cursor: pointer;
@@ -79,5 +84,61 @@ li {
 }
 .daysPrevNext {
   color: rgb(186, 186, 186);
+}
+
+.button {
+  display: block;
+  text-decoration: none;
+  color: black;
+  width: 100px;
+  border: 1px solid black;
+  text-align: center;
+  padding: 5px;
+  border-radius: 10px;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+}
+.button:first-child {
+  margin-right: 20px;
+}
+.button:hover {
+  background-color: rgb(235, 235, 235);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.box_task {
+  border: 1px solid red;
+}
+.currentDay {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #0b57d0;
+  color: white;
+  margin-bottom: 2px;
+}
+.dayInCells {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-bottom: 2px;
+}
+.taskInCells {
+  display: flex;
+  justify-content: left;
+  background-color: #0b57d0;
+  border-radius: 6px;
+  padding: 3px;
+  color: white;
+  font-size: 14px;
 }
 
