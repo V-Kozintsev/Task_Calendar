@@ -142,14 +142,84 @@ li {
   color: white;
   font-size: 14px;
 }
+.box {
+  display: hidden;
+}
 .popup {
   position: absolute;
-  display: flex;
+  display: none;
+  flex-direction: column;
+  align-items: end;
   z-index: 999;
   background-color: #f2f2f2;
-  background-color: red;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 10);
   width: 30%;
+  height: 30%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  padding: 10px;
+  border-radius: 20px;
+}
+.window-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; /* Скрыть по умолчанию */
+  z-index: 998; /* Чуть ниже чем popup */
+}
+.title {
+  width: 80%;
+  margin: 30px 0 5px 0;
+  outline: none;
+  border: none;
+  background-color: #f2f2f2;
+  font-size: 20px;
+  color: #001d35;
+  border-bottom: 2px solid #ccc; /* серый цвет нижней рамки */
+  transition: border-bottom-color 0.3s ease;
+  padding: 2px;
+}
+.title:focus {
+  outline: none; /* убираем стандартную обводку */
+  border-bottom: 2px solid #0b57d0; /* серый цвет нижней рамки */
+}
+.task-title {
+  width: 80%;
+  margin: 30px 0 5px 0;
+  outline: none;
+  border: none;
+  background-color: #c4c7c5;
+  font-size: 14px;
+  color: #072711;
+  border-radius: 10px;
+  padding: 20px;
+  border-bottom: 2px solid #ccc; /* серый цвет нижней рамки */
+  transition: border-bottom-color 0.3s ease;
+}
+.task-title:focus {
+  border-bottom: 3px solid #0b57d0; /* серый цвет нижней рамки */
+  background-color: #b9b9b9;
+}
+.task-title:hover {
+  background-color: #b9b9b9;
+}
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  width: 20px;
+  height: 20px;
+}
+.close-btn:hover {
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #c4c7c5;
+}
+
+.hidden {
 }

@@ -29,9 +29,24 @@
           <li class="days-weeks">Вс</li>
         </ul>
         <div class="container_calendar__box-day"></div>
+
         <form class="popup" action="">
-          <input type="text" placeholder="Добавьте название" required />
+          <span class="close-btn">&times;</span>
+          <input
+            class="title"
+            type="text"
+            placeholder="Добавьте название"
+            required
+          />
+          <textarea
+            class="task-title"
+            id="task-description"
+            placeholder="Добавьте описание"
+            required
+          ></textarea>
         </form>
+        <div class="window-background"></div>
+        <!-- Элемент фона (в случае, если необходимо) -->
       </div>
     </div>
   </body>

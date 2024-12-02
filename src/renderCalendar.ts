@@ -1,3 +1,5 @@
+import { currentClickDiv } from "./currentClickDiv";
+
 const currentDate = new Date();
 let month: number = currentDate.getMonth();
 let year = currentDate.getFullYear();
@@ -5,7 +7,7 @@ const firstDayIndex: number = new Date(year, month, 1).getDay();
 const weeks: number = (firstDayIndex + 6) % 7;
 let prevDayMonth = new Date(year, month, -weeks).getDate();
 
-export function renderCalendar() {
+export async function renderCalendar() {
   let lastDay = new Date(year, month + 1, 0);
   let lastDate = lastDay.getDate();
 
@@ -129,6 +131,7 @@ export function renderCalendar() {
         ) {
           daysCellsDay.classList.add("currentDay");
         }
+        currentClickDiv(daysCells, daysCellsDay);
       }
 
       const allDivDays = document.querySelectorAll(".days");
@@ -198,6 +201,7 @@ export function renderCalendar() {
         ) {
           daysCellsDay.classList.add("currentDay");
         }
+        currentClickDiv(daysCells, daysCellsDay);
       }
       const allDivDays = document.querySelectorAll(".days");
       const nextDay = new Date(year, month + 1, 1);
@@ -213,11 +217,4 @@ export function renderCalendar() {
     });
   }
   btnPrevMonthYear();
-}
-
-function currentClickDiv(cell: HTMLDivElement, day: HTMLDivElement) {
-  // Добавляем обработчик события клика для переданной ячейки
-  cell.addEventListener("click", () => {
-    console.log("Кликнули по дню:", cell, day);
-  });
 }
