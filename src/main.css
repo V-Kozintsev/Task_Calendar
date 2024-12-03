@@ -220,6 +220,8 @@ li {
   border-radius: 50%;
   background-color: #c4c7c5;
 }
-
-.hidden {
+.month_popup {
+  font-size: 18px;
+  margin-top: 10px;
+  font-weight: 600;
 }

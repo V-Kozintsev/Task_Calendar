@@ -1,7 +1,13 @@
-export function currentClickDiv(cell: HTMLDivElement, day: HTMLDivElement) {
+export function currentClickDiv(
+  cell: HTMLDivElement,
+  day: HTMLDivElement,
+  dateData: HTMLElement | null,
+) {
   const popupForm: HTMLElement | null = document.querySelector(".popup");
   const backgroundOverlay: HTMLElement | null =
     document.querySelector(".window-background");
+  const monthRenderPopup: HTMLElement | null =
+    document.getElementById("month_popup");
 
   // Обработчик клика для ячейки
   cell.addEventListener("click", (event) => {
@@ -9,6 +15,10 @@ export function currentClickDiv(cell: HTMLDivElement, day: HTMLDivElement) {
     if (popupForm && backgroundOverlay) {
       popupForm.style.display = "flex"; // Показать popup
       backgroundOverlay.style.display = "block"; // Показать фон
+    }
+
+    if (monthRenderPopup && dateData) {
+      monthRenderPopup.textContent = `${day.textContent} ${dateData.textContent}`;
     }
     console.log("Кликнули по дню:", cell, day);
   });

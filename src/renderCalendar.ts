@@ -13,6 +13,7 @@ export async function renderCalendar() {
 
   //отображаем месяц и год
   const monthRender: HTMLElement | null = document.getElementById("month");
+
   if (monthRender) {
     monthRender.textContent = currentDate.toLocaleDateString("ru-Ru", {
       month: "long",
@@ -51,7 +52,7 @@ export async function renderCalendar() {
     daysCells.appendChild(taskCellsDay);
     taskCellsDay.textContent = "задача с заголовком";
     //создаем блок для добавления задачи в ячейке
-    currentClickDiv(daysCells, daysCellsDay);
+    currentClickDiv(daysCells, daysCellsDay, monthRender);
 
     daysCellsDay.textContent = cells.toString();
 
@@ -131,7 +132,7 @@ export async function renderCalendar() {
         ) {
           daysCellsDay.classList.add("currentDay");
         }
-        currentClickDiv(daysCells, daysCellsDay);
+        currentClickDiv(daysCells, daysCellsDay, monthRender);
       }
 
       const allDivDays = document.querySelectorAll(".days");
@@ -201,7 +202,7 @@ export async function renderCalendar() {
         ) {
           daysCellsDay.classList.add("currentDay");
         }
-        currentClickDiv(daysCells, daysCellsDay);
+        currentClickDiv(daysCells, daysCellsDay, monthRender);
       }
       const allDivDays = document.querySelectorAll(".days");
       const nextDay = new Date(year, month + 1, 1);
