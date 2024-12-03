@@ -2,7 +2,8 @@ import { currentClickDiv } from "./currentClickDiv";
 
 const currentDate = new Date();
 let month: number = currentDate.getMonth();
-let year = currentDate.getFullYear();
+let year: number = currentDate.getFullYear();
+
 const firstDayIndex: number = new Date(year, month, 1).getDay();
 const weeks: number = (firstDayIndex + 6) % 7;
 let prevDayMonth = new Date(year, month, -weeks).getDate();
@@ -46,12 +47,7 @@ export async function renderCalendar() {
 
     dayBox?.appendChild(daysCells);
     daysCells.appendChild(daysCellsDay);
-    //создаем блок для добавления задачи в ячейке
-    const taskCellsDay: HTMLDivElement = document.createElement("div");
-    taskCellsDay.className = "taskInCells";
-    daysCells.appendChild(taskCellsDay);
-    taskCellsDay.textContent = "задача с заголовком";
-    //создаем блок для добавления задачи в ячейке
+
     currentClickDiv(daysCells, daysCellsDay, monthRender);
 
     daysCellsDay.textContent = cells.toString();
@@ -180,6 +176,7 @@ export async function renderCalendar() {
         prevDayMonth++;
         daysCells.textContent = prevDayMonth.toString();
       }
+
       const monthCurrent = currentDate.toLocaleString("ru-Ru", {
         month: "long",
       });
@@ -204,6 +201,7 @@ export async function renderCalendar() {
         }
         currentClickDiv(daysCells, daysCellsDay, monthRender);
       }
+
       const allDivDays = document.querySelectorAll(".days");
       const nextDay = new Date(year, month + 1, 1);
       let nextN = nextDay.getDate();
@@ -218,4 +216,29 @@ export async function renderCalendar() {
     });
   }
   btnPrevMonthYear();
+}
+
+export function dataInputValue(daysCells: HTMLElement) {
+  const inputTitle: HTMLInputElement | null = document.getElementById(
+    "title",
+  ) as HTMLInputElement;
+  const popupForm: HTMLElement | null = document.querySelector(".popup");
+  const backgroundOverlay: HTMLElement | null =
+    document.querySelector(".window-background");
+
+  if (inputTitle && popupForm && backgroundOverlay) {
+    const btn = document.getElementById("btn");
+    btn?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      //создаем блок для добавления задачи в ячейке
+      const taskCellsDay: HTMLDivElement = document.createElement("div");
+      taskCellsDay.className = "taskInCells";
+      taskCellsDay.textContent = inputTitle.value;
+
+      daysCells.appendChild(taskCellsDay);
+      inputTitle.value = ""; // Очищаем инпут
+      popupForm.style.display = "none"; // Скрыть popup
+      backgroundOverlay.style.display = "none"; // Скрыть фон
+    });
+  }
 }

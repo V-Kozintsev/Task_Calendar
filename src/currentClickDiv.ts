@@ -1,3 +1,5 @@
+import { dataInputValue } from "./renderCalendar";
+
 export function currentClickDiv(
   cell: HTMLDivElement,
   day: HTMLDivElement,
@@ -12,6 +14,7 @@ export function currentClickDiv(
   // Обработчик клика для ячейки
   cell.addEventListener("click", (event) => {
     event.stopPropagation(); // Остановить всплытие события
+
     if (popupForm && backgroundOverlay) {
       popupForm.style.display = "flex"; // Показать popup
       backgroundOverlay.style.display = "block"; // Показать фон
@@ -21,6 +24,8 @@ export function currentClickDiv(
       monthRenderPopup.textContent = `${day.textContent} ${dateData.textContent}`;
     }
     console.log("Кликнули по дню:", cell, day);
+
+    dataInputValue(cell);
   });
 
   // Обработчик клика для кнопки закрытия
