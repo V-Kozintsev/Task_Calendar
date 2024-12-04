@@ -1,5 +1,7 @@
 import "./main.css";
 
+import { currentClickDiv } from "./currentClickDiv";
+
 const currentDate = new Date();
 let year = currentDate.getFullYear();
 let month = currentDate.getMonth();
@@ -33,7 +35,7 @@ function renderCalendar() {
     cells.className = "days";
     cells.textContent = prevCells.toString();
 
-    clickCell(cells);
+    currentClickDiv(cells);
     boxDay?.appendChild(cells);
   }
   updateMonthYearDisplay();
@@ -73,13 +75,3 @@ nextMonth();
 } */
 
 /* const newTask = new task(); */
-
-function clickCell(event: HTMLDivElement) {
-  event.addEventListener("click", () => {
-    if (event) {
-      /* const taskInCells = document.createElement("div");
-      taskInCells.className = "taskInCells";
-      event.appendChild(taskInCells); */
-    }
-  });
-}
