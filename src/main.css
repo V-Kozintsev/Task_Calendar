@@ -142,9 +142,6 @@ li {
   color: white;
   font-size: 14px;
 }
-.box {
-  display: hidden;
-}
 .popup {
   position: absolute;
   display: none;
