@@ -9,7 +9,7 @@
     <div class="container_calendar">
       <div class="container_calendar__box-header">
         <div class="container_calendar__box-header_btn-month">
-          <button class="prev_month_btn button">назад</button>
+          <button id="prevBtn" class="prev_month_btn button">назад</button>
           <button id="nextBtn" class="next_month_btn button">вперед</button>
           <div id="month" class="month"></div>
         </div>
@@ -29,12 +29,11 @@
           <li class="days-weeks">ВС</li>
         </ul>
         <div class="container_calendar__box-day"></div>
-
-        <form class="popup" action="">
+        <form class="popup" action="" autocomplete="off">
           <span class="close-btn">&times;</span>
           <input
             id="title"
-            class="title"
+            class="input_value"
             type="text"
             name="title"
             placeholder="Добавьте название"
@@ -47,9 +46,14 @@
             placeholder="Добавьте описание"
             required
           ></textarea>
-          <button id="btn">кнопка</button>
+          <button type="submit" id="btnSave">сохранить</button>
+          <button id="btnClosed">закрыть</button>
         </form>
         <div class="window-background"></div>
+
+        <div class="box">
+          <div class="taskT"></div>
+        </div>
       </div>
     </div>
   </body>
