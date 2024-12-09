@@ -40,7 +40,7 @@ li {
   height: 90%;
 }
 .container_calendar__box-day {
-  position: relative;
+  /* position: relative; */
   height: 100%;
   width: 100%;
   display: grid;
@@ -67,10 +67,7 @@ li {
   display: table-column;
   text-align: center;
 }
-.days:hover {
-  cursor: pointer;
-  background-color: rgb(235, 235, 235);
-}
+
 .days:first-child {
   border-top-left-radius: 15px;
 }
@@ -136,14 +133,26 @@ li {
 .taskInCells {
   display: flex;
   justify-content: left;
+  background-color: rgb(66, 133, 244);
+  border-radius: 6px;
+  padding: 3px;
+  color: white;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+  margin-bottom: 2px;
+}
+.taskInCells:hover {
+  background-color: #0842a0;
+  cursor: pointer;
+}
+.task {
+  display: flex;
+  justify-content: left;
   background-color: #0b57d0;
   border-radius: 6px;
   padding: 3px;
   color: white;
   font-size: 14px;
-}
-.box {
-  display: hidden;
 }
 .popup {
   position: absolute;
@@ -171,7 +180,7 @@ li {
   display: none; /* Скрыть по умолчанию */
   z-index: 998; /* Чуть ниже чем popup */
 }
-.title {
+.input_value {
   width: 80%;
   margin: 30px 0 5px 0;
   outline: none;
@@ -183,7 +192,7 @@ li {
   transition: border-bottom-color 0.3s ease;
   padding: 2px;
 }
-.title:focus {
+.input_value:focus {
   outline: none; /* убираем стандартную обводку */
   border-bottom: 2px solid #0b57d0; /* серый цвет нижней рамки */
 }
@@ -220,7 +229,18 @@ li {
   border-radius: 50%;
   background-color: #c4c7c5;
 }
+.month_popup {
+  font-size: 18px;
+  margin-top: 10px;
+  font-weight: 600;
+}
 
-.hidden {
+.container-task {
+  /* position: absolute; */
+  border: 2px solid black;
+  width: 300px;
+  height: 300px;
+  top: 0;
+  left: 0;
 }
 
