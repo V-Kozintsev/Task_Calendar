@@ -19,9 +19,11 @@ function renderCalendar() {
   const prevMonthDays = new Date(year, month, 0).getDate(); //общее кол-во дней предыдущего месяца
   const weeks = (firstDayIndex + 6) % 7;
   let prevMonthDaysCells = prevMonthDays - weeks;
-
+  let numberPrev = 0;
+  let numberNext = 1;
   //ячейки предыдущего месяца
   for (let prevCells = 1; prevCells <= weeks; prevCells++) {
+    numberPrev++;
     const cells = document.createElement("div");
     cells.className = "days daysPrevNext";
     prevMonthDaysCells += 1;
@@ -38,8 +40,23 @@ function renderCalendar() {
     dateCells.className = "date";
     dateCells.textContent = cells.toString();
     newCells.appendChild(dateCells);
+
     currentClickDiv(newCells);
   }
+
+  //ячейки следующего месяца
+  for (let cells = dayInMonth + numberPrev; cells < 42; cells++) {
+    const newCells = document.createElement("div");
+    newCells.className = "days daysPrevNext";
+    containerCells?.appendChild(newCells);
+    const dateCells = document.createElement("div");
+    dateCells.className = "date";
+    dateCells.textContent = numberNext.toString();
+    numberNext++;
+    newCells.appendChild(dateCells);
+    currentClickDiv(newCells);
+  }
+
   updateMonthYearDisplay();
 
   function saveBtnTask() {
@@ -100,6 +117,7 @@ prevMonth();
 function currentClickDiv(cell: HTMLDivElement) {
   const inputValue = document.getElementById("title") as HTMLInputElement;
   const popupForm: HTMLElement | null = document.querySelector(".popup");
+
   const backgroundOverlay: HTMLElement | null =
     document.querySelector(".window-background");
 
@@ -108,6 +126,7 @@ function currentClickDiv(cell: HTMLDivElement) {
     // Приведение типа для event.target
     const target = event.target as HTMLElement;
     const isTaskInCells = target.classList.contains("taskInCells");
+
     if (!isTaskInCells) {
       event.stopPropagation();
       selected = cell;
@@ -116,10 +135,8 @@ function currentClickDiv(cell: HTMLDivElement) {
         backgroundOverlay.style.display = "block";
         inputValue.value = "";
       }
-    } else {
-      console.log("hello");
-      /* add.style.display = "block"; */
-    }
+    } /* else {
+    } */
   });
 
   // Обработчик клика для кнопки закрытия
