@@ -1,6 +1,6 @@
 import "./main.css";
 
-/* import { Task, LocalTask } from "./apiTasks"; */
+import { RunTask } from "./api";
 
 let selected: HTMLDivElement;
 
@@ -96,13 +96,13 @@ function renderCalendar() {
         taskTitle.textContent = taskText;
         popupForm.style.display = "none";
         backgroundOverlay.style.display = "none";
-        /* const secureID = crypto.randomUUID();
-        runTask.saveTask({
+        const secureID = crypto.randomUUID();
+        RunTask.saveTask({
           id: `${secureID}`,
           title: `${taskText}`,
         });
         inputText.value = "";
-        console.log("ЗАПИСАЛ"); */
+        console.log("ЗАПИСАЛ");
       }
     });
   }

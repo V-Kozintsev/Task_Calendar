@@ -4,7 +4,7 @@ export interface Task {
   /* completed: boolean; */
 }
 
-export class LocalTask {
+export class LSCalendarApi {
   private TaskKey: string;
 
   constructor() {
@@ -45,22 +45,3 @@ export class LocalTask {
     localStorage.removeItem(this.TaskKey); // Удаляем некорректные данные
   }
 }
-
-// Пример использования класса
-const runTask = new LocalTask();
-
-// Получаем все задачи
-
-//тесты
-/* document.querySelector(".saved")?.addEventListener("click", () => {
-    const secureID = crypto.randomUUID();
-    runTask.saveTask({
-      id: `${secureID}`,
-      title: "Первая задача",
-    });
-  
-    console.log("записал");
-  }); */
-document.querySelector(".read")?.addEventListener("click", () => {
-  console.log(runTask.getTasks());
-});
