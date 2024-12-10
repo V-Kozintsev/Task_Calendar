@@ -15,6 +15,7 @@ li {
   height: 100vh;
   width: 100%;
 }
+
 .container_calendar__box-header {
   display: flex;
   justify-content: space-between;
@@ -26,9 +27,17 @@ li {
   display: flex;
 }
 .month {
-  font-size: 24px;
+  /* font-size: 24px;
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
+  font-weight: bold; */
+  font:
+    400 22px / 28px "Google Sans",
+    Roboto,
+    Arial,
+    sans-serif;
+}
+.month:first-letter {
+  text-transform: uppercase;
 }
 .next_month_btn {
   margin: 0px 30px;
@@ -107,9 +116,6 @@ li {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.box_task {
-  border: 1px solid red;
-}
 .currentDay {
   display: inline-flex;
   justify-content: center;
@@ -213,8 +219,12 @@ li {
   border-bottom: 3px solid #0b57d0; /* серый цвет нижней рамки */
   background-color: #b9b9b9;
 }
+.dateMonthYear {
+  color: #747474;
+  font-weight: 600;
+}
 .task-title:hover {
-  background-color: #b9b9b9;
+  background-color: #c4c7c5;
 }
 .close-btn {
   display: flex;
@@ -242,4 +252,21 @@ li {
   height: 300px;
   top: 0;
   left: 0;
+}
+.date {
+  height: 24px;
+  width: 24px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-bottom: 3px;
+  border-radius: 50%;
+}
+.curDate {
+  margin: 0 auto;
+  margin-bottom: 3px;
+  color: white;
+  background-color: #0b57d0;
 }

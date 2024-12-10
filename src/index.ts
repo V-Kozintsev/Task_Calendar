@@ -1,17 +1,19 @@
 import "./main.css";
 
+/* import { Task, LocalTask } from "./apiTasks"; */
+
 let selected: HTMLDivElement;
 
 const currentDate = new Date();
 let year = currentDate.getFullYear();
 let month = currentDate.getMonth();
+
 const currentMonth = document.getElementById("month") as HTMLDivElement;
 
 function renderCalendar() {
   const containerCells = document.querySelector(
     ".container_calendar__box-day",
   ) as HTMLDivElement;
-
   containerCells.innerHTML = "";
 
   const firstDayIndex = new Date(year, month, 1).getDay();
@@ -21,6 +23,13 @@ function renderCalendar() {
   let prevMonthDaysCells = prevMonthDays - weeks;
   let numberPrev = 0;
   let numberNext = 1;
+
+  const currentDayMontYear = new Date();
+  const curDay = currentDayMontYear.getDate();
+  const currentDayCalendar = currentDayMontYear.toLocaleDateString("ru-Ru", {
+    month: "long",
+    year: "numeric",
+  });
   //ячейки предыдущего месяца
   for (let prevCells = 1; prevCells <= weeks; prevCells++) {
     numberPrev++;
@@ -31,6 +40,7 @@ function renderCalendar() {
     containerCells?.appendChild(cells);
   }
 
+  updateMonthYearDisplay();
   //ячейки текущего месяца
   for (let cells = 1; cells <= dayInMonth; cells++) {
     const newCells = document.createElement("div");
@@ -40,7 +50,10 @@ function renderCalendar() {
     dateCells.className = "date";
     dateCells.textContent = cells.toString();
     newCells.appendChild(dateCells);
-
+    console.log();
+    if (currentDayCalendar === currentMonth.textContent && curDay === cells) {
+      dateCells.className = "date curDate";
+    }
     currentClickDiv(newCells);
   }
 
@@ -57,10 +70,18 @@ function renderCalendar() {
     currentClickDiv(newCells);
   }
 
-  updateMonthYearDisplay();
-
   function saveBtnTask() {
+    const dayMonthYear = new Date(year, month);
+    const currentDayCalendar = dayMonthYear.toLocaleDateString("ru-Ru", {
+      month: "long",
+      year: "numeric",
+    });
     const popupForm = document.querySelector(".popup") as HTMLDivElement;
+    const dateMonthYear = document.querySelector(
+      ".dateMonthYear",
+    ) as HTMLDivElement;
+
+    dateMonthYear.innerText = currentDayCalendar;
     const backgroundOverlay = document.querySelector(
       ".window-background",
     ) as HTMLDivElement;
@@ -75,7 +96,13 @@ function renderCalendar() {
         taskTitle.textContent = taskText;
         popupForm.style.display = "none";
         backgroundOverlay.style.display = "none";
+        /* const secureID = crypto.randomUUID();
+        runTask.saveTask({
+          id: `${secureID}`,
+          title: `${taskText}`,
+        });
         inputText.value = "";
+        console.log("ЗАПИСАЛ"); */
       }
     });
   }
@@ -126,7 +153,8 @@ function currentClickDiv(cell: HTMLDivElement) {
     // Приведение типа для event.target
     const target = event.target as HTMLElement;
     const isTaskInCells = target.classList.contains("taskInCells");
-
+    const ine = target.classList.contains("date");
+    console.log(ine);
     if (!isTaskInCells) {
       event.stopPropagation();
       selected = cell;
