@@ -271,3 +271,9 @@ li {
   background-color: #0b57d0;
 }
 
+.block {
+  width: 500px;
+  height: 500px;
+  border: 2px solid black;
+}
+
