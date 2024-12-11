@@ -1,24 +1,19 @@
 import { RunTask } from "./api";
-import { selected } from "./currentClickDiv";
+import { selected, dateClicked } from "./currentClickDiv";
 //комит
-export function saveBtnTask() {
-  const dayMonthYear = new Date(RunTask.year, RunTask.month);
-  const currentDayCalendar = dayMonthYear.toLocaleDateString("ru-Ru", {
-    month: "long",
-    year: "numeric",
-  });
+export async function saveBtnTask() {
   const popupForm = document.querySelector(".popup") as HTMLDivElement;
-  const dateMonthYear = document.querySelector(
-    ".dateMonthYear",
-  ) as HTMLDivElement;
 
-  dateMonthYear.innerText = currentDayCalendar;
   const backgroundOverlay = document.querySelector(
     ".window-background",
   ) as HTMLDivElement;
   document.getElementById("btnSave")?.addEventListener("click", (e) => {
     const inputText = document.getElementById("title") as HTMLInputElement;
+    const inputTextDescription = document.getElementById(
+      "task-description",
+    ) as HTMLInputElement;
     const taskText = inputText.value.trim();
+    const descriptionText = inputTextDescription.value.trim();
     e.preventDefault();
     if (taskText) {
       const taskTitle = document.createElement("div");
@@ -29,11 +24,16 @@ export function saveBtnTask() {
       backgroundOverlay.style.display = "none";
       const secureID = crypto.randomUUID();
       RunTask.saveTask({
-        id: `${secureID}`,
-        title: `${taskText}`,
+        id: secureID,
+        title: taskText,
+        description: descriptionText,
+        date: dateClicked,
       });
       inputText.value = "";
+      inputTextDescription.value = "";
+
       console.log("ЗАПИСАЛ");
+      console.log(dateClicked);
     }
   });
 }

@@ -1,5 +1,18 @@
+import { RunTask } from "./api";
 export let selected: HTMLDivElement;
-export function currentClickDiv(cell: HTMLDivElement) {
+export let dateClicked: string;
+
+export async function currentClickDiv(cell: HTMLDivElement) {
+  const dateMonthYear = document.querySelector(
+    ".dateMonthYear",
+  ) as HTMLDivElement;
+  const dayMonthYear = new Date(RunTask.year, RunTask.month);
+  const currentDayCalendar = dayMonthYear.toLocaleDateString("ru-Ru", {
+    month: "numeric",
+    year: "numeric",
+  });
+  let clickedDay: string | null | undefined;
+
   const inputValue = document.getElementById("title") as HTMLInputElement;
   const popupForm: HTMLElement | null = document.querySelector(".popup");
 
@@ -11,18 +24,21 @@ export function currentClickDiv(cell: HTMLDivElement) {
     // Приведение типа для event.target
     const target = event.target as HTMLElement;
     const isTaskInCells = target.classList.contains("taskInCells");
-    const ine = target.classList.contains("date");
-    console.log(ine);
+
     if (!isTaskInCells) {
       event.stopPropagation();
       selected = cell;
+
       if (popupForm && backgroundOverlay) {
         popupForm.style.display = "flex";
         backgroundOverlay.style.display = "block";
         inputValue.value = "";
+        clickedDay = selected.firstElementChild?.textContent;
+        dateMonthYear.textContent = `${clickedDay}.${currentDayCalendar}`;
       }
     } /* else {
       } */
+    dateClicked = `${clickedDay}.${currentDayCalendar}`;
   });
 
   // Обработчик клика для кнопки закрытия

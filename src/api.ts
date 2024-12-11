@@ -1,4 +1,5 @@
 import { LSCalendarApi } from "./LSCalendarApi";
+
 export const RunTask = new LSCalendarApi();
 
 // Получаем все задачи
@@ -14,8 +15,14 @@ export const RunTask = new LSCalendarApi();
     console.log("записал");
   }); */
 document.querySelector(".read")?.addEventListener("click", () => {
-  console.log(RunTask.getTasks());
+  /* const blockBtn = document.querySelector(".block"); */
+  const newDiv = document.createElement("div") as HTMLDivElement;
+  newDiv.className = "newTask";
+  if (newDiv) {
+    newDiv.textContent = "212121";
+  }
 });
+
 document.querySelector(".delete")?.addEventListener("click", () => {
   RunTask.clearTasks();
 });

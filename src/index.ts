@@ -8,7 +8,7 @@ import { nextMonth, prevMonth } from "./nextMonthAndPrevMonth";
 
 export const currentMonth = document.getElementById("month") as HTMLDivElement;
 
-export function renderCalendar() {
+export async function renderCalendar() {
   const containerCells = document.querySelector(
     ".container_calendar__box-day",
   ) as HTMLDivElement;
@@ -38,7 +38,7 @@ export function renderCalendar() {
     containerCells?.appendChild(cells);
   }
 
-  updateMonthYearDisplay();
+  await updateMonthYearDisplay();
   //ячейки текущего месяца
   for (let cells = 1; cells <= dayInMonth; cells++) {
     const newCells = document.createElement("div");
@@ -52,7 +52,7 @@ export function renderCalendar() {
     if (currentDayCalendar === currentMonth.textContent && curDay === cells) {
       dateCells.className = "date curDate";
     }
-    currentClickDiv(newCells);
+    await currentClickDiv(newCells);
   }
 
   //ячейки следующего месяца
@@ -68,7 +68,7 @@ export function renderCalendar() {
     currentClickDiv(newCells);
   }
 
-  saveBtnTask();
+  await saveBtnTask();
 }
 renderCalendar();
 

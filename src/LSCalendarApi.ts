@@ -1,6 +1,8 @@
 export interface Task {
   id: string;
   title: string;
+  description: string;
+  date: string;
   /* completed: boolean; */
 }
 
@@ -14,6 +16,7 @@ export class LSCalendarApi {
 
   constructor() {
     this.TaskKey = "tasks";
+
     this.currentDate = new Date();
     this.month = this.currentDate.getMonth();
     this.year = this.currentDate.getFullYear();
