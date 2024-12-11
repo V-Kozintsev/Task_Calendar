@@ -1,6 +1,4 @@
 import { LSCalendarApi } from "./LSCalendarApi";
-
-// Пример использования класса
 export const RunTask = new LSCalendarApi();
 
 // Получаем все задачи

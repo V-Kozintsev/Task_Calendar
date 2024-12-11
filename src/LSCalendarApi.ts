@@ -6,9 +6,17 @@ export interface Task {
 
 export class LSCalendarApi {
   private TaskKey: string;
+  /* private currentDate: Date; */
+  /* static currentDate: any; */
+  currentDate = new Date();
+  year: number;
+  month: number;
 
   constructor() {
     this.TaskKey = "tasks";
+    this.currentDate = new Date();
+    this.month = this.currentDate.getMonth();
+    this.year = this.currentDate.getFullYear();
   }
 
   getTasks(): Task[] {

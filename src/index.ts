@@ -1,24 +1,22 @@
 import "./main.css";
 
 import { RunTask } from "./api";
+import { updateMonthYearDisplay } from "./updateMonthYearDisplay";
+import { currentClickDiv } from "./currentClickDiv";
+import { saveBtnTask } from "./saveBtnTask";
+import { nextMonth, prevMonth } from "./nextMonthAndPrevMonth";
 
-let selected: HTMLDivElement;
+export const currentMonth = document.getElementById("month") as HTMLDivElement;
 
-const currentDate = new Date();
-let year = currentDate.getFullYear();
-let month = currentDate.getMonth();
-
-const currentMonth = document.getElementById("month") as HTMLDivElement;
-
-function renderCalendar() {
+export function renderCalendar() {
   const containerCells = document.querySelector(
     ".container_calendar__box-day",
   ) as HTMLDivElement;
   containerCells.innerHTML = "";
 
-  const firstDayIndex = new Date(year, month, 1).getDay();
-  const dayInMonth = new Date(year, month + 1, 0).getDate(); //общее кол-во дней текущего месяца
-  const prevMonthDays = new Date(year, month, 0).getDate(); //общее кол-во дней предыдущего месяца
+  const firstDayIndex = new Date(RunTask.year, RunTask.month, 1).getDay();
+  const dayInMonth = new Date(RunTask.year, RunTask.month + 1, 0).getDate(); //общее кол-во дней текущего месяца
+  const prevMonthDays = new Date(RunTask.year, RunTask.month, 0).getDate(); //общее кол-во дней предыдущего месяца
   const weeks = (firstDayIndex + 6) % 7;
   let prevMonthDaysCells = prevMonthDays - weeks;
   let numberPrev = 0;
@@ -70,118 +68,9 @@ function renderCalendar() {
     currentClickDiv(newCells);
   }
 
-  function saveBtnTask() {
-    const dayMonthYear = new Date(year, month);
-    const currentDayCalendar = dayMonthYear.toLocaleDateString("ru-Ru", {
-      month: "long",
-      year: "numeric",
-    });
-    const popupForm = document.querySelector(".popup") as HTMLDivElement;
-    const dateMonthYear = document.querySelector(
-      ".dateMonthYear",
-    ) as HTMLDivElement;
-
-    dateMonthYear.innerText = currentDayCalendar;
-    const backgroundOverlay = document.querySelector(
-      ".window-background",
-    ) as HTMLDivElement;
-    document.getElementById("btnSave")?.addEventListener("click", (e) => {
-      const inputText = document.getElementById("title") as HTMLInputElement;
-      const taskText = inputText.value.trim();
-      e.preventDefault();
-      if (taskText) {
-        const taskTitle = document.createElement("div");
-        taskTitle.className = "taskInCells";
-        selected.appendChild(taskTitle);
-        taskTitle.textContent = taskText;
-        popupForm.style.display = "none";
-        backgroundOverlay.style.display = "none";
-        const secureID = crypto.randomUUID();
-        RunTask.saveTask({
-          id: `${secureID}`,
-          title: `${taskText}`,
-        });
-        inputText.value = "";
-        console.log("ЗАПИСАЛ");
-      }
-    });
-  }
   saveBtnTask();
 }
 renderCalendar();
 
-function updateMonthYearDisplay() {
-  const renderMonthYear = new Date(year, month);
-  currentMonth.textContent = renderMonthYear.toLocaleDateString("ru-RU", {
-    month: "long",
-    year: "numeric",
-  });
-}
-
-function nextMonth() {
-  document.getElementById("nextBtn")?.addEventListener("click", () => {
-    month++;
-    if (month > 11) {
-      month = 0;
-      year++;
-    }
-    renderCalendar();
-  });
-}
 nextMonth();
-function prevMonth() {
-  document.getElementById("prevBtn")?.addEventListener("click", () => {
-    month--;
-    if (month < 0) {
-      month = 11;
-      year--;
-    }
-    renderCalendar();
-  });
-}
 prevMonth();
-
-function currentClickDiv(cell: HTMLDivElement) {
-  const inputValue = document.getElementById("title") as HTMLInputElement;
-  const popupForm: HTMLElement | null = document.querySelector(".popup");
-
-  const backgroundOverlay: HTMLElement | null =
-    document.querySelector(".window-background");
-
-  // Обработчик клика для ячейки
-  cell.addEventListener("click", (event) => {
-    // Приведение типа для event.target
-    const target = event.target as HTMLElement;
-    const isTaskInCells = target.classList.contains("taskInCells");
-    const ine = target.classList.contains("date");
-    console.log(ine);
-    if (!isTaskInCells) {
-      event.stopPropagation();
-      selected = cell;
-      if (popupForm && backgroundOverlay) {
-        popupForm.style.display = "flex";
-        backgroundOverlay.style.display = "block";
-        inputValue.value = "";
-      }
-    } /* else {
-    } */
-  });
-
-  // Обработчик клика для кнопки закрытия
-  const closeButton = document.querySelector(".close-btn");
-  closeButton?.addEventListener("click", (event) => {
-    event.stopPropagation(); // Остановить всплытие события
-    if (popupForm && backgroundOverlay) {
-      popupForm.style.display = "none"; // Скрыть popup
-      backgroundOverlay.style.display = "none"; // Скрыть фон
-    }
-  });
-
-  // Обработчик клика для фона
-  backgroundOverlay?.addEventListener("click", () => {
-    if (popupForm) {
-      popupForm.style.display = "none"; // Скрыть popup
-      backgroundOverlay.style.display = "none"; // Скрыть фон
-    }
-  });
-}
