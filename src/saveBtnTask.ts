@@ -1,5 +1,7 @@
 import { RunTask } from "./api";
+import { Task } from "./LSCalendarApi";
 import { selected, dateClicked } from "./currentClickDiv";
+
 //комит
 export async function saveBtnTask() {
   const popupForm = document.querySelector(".popup") as HTMLDivElement;
@@ -29,11 +31,47 @@ export async function saveBtnTask() {
         description: descriptionText,
         date: dateClicked,
       });
+
+      // Добавляем задачу в интерфейс
+      addTask(taskText, descriptionText, dateClicked);
+
       inputText.value = "";
       inputTextDescription.value = "";
-
-      console.log("ЗАПИСАЛ");
-      console.log(dateClicked);
     }
   });
 }
+
+function addTask(title: string, description: string, date: string) {
+  const boxTask = document.getElementById("box-task");
+  const itemTask = document.createElement("div"); //коробка для данных
+  itemTask.className = "item-task";
+  boxTask?.appendChild(itemTask);
+
+  const titleTask = document.createElement("div"); //имя задачи
+  titleTask.className = "title-task";
+  titleTask.innerText = title;
+  itemTask.appendChild(titleTask);
+
+  const descriptionTask = document.createElement("div"); //описание задачи
+  descriptionTask.className = "description-task";
+  descriptionTask.innerText = description;
+  itemTask.appendChild(descriptionTask);
+
+  const dateTask = document.createElement("div"); // дата задачи
+  dateTask.className = "date-task";
+  dateTask.innerText = date;
+  itemTask.appendChild(dateTask);
+}
+function loadTasks() {
+  RunTask.getTasks().forEach((task: Task) => {
+    addTask(task.title, task.description, task.date);
+  });
+}
+window.onload = loadTasks;
+
+document.querySelector(".read")?.addEventListener("click", () => {
+  console.log(RunTask.getTasks());
+});
+document.querySelector(".delete")?.addEventListener("click", () => {
+  RunTask.clearTasks();
+});

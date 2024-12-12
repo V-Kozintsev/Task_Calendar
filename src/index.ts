@@ -7,6 +7,7 @@ import { saveBtnTask } from "./saveBtnTask";
 import { nextMonth, prevMonth } from "./nextMonthAndPrevMonth";
 
 export const currentMonth = document.getElementById("month") as HTMLDivElement;
+const btnTask = document.getElementById("task") as HTMLDivElement;
 
 export async function renderCalendar() {
   const containerCells = document.querySelector(
@@ -74,3 +75,33 @@ renderCalendar();
 
 nextMonth();
 prevMonth();
+
+function taskWindow() {
+  const boxTask = document.getElementById("task-block") as HTMLDivElement;
+  const backgroundOverlay: HTMLElement | null =
+    document.querySelector(".window-background");
+  const closeButton = document.querySelector(".close-btn-task");
+  if (boxTask && backgroundOverlay) {
+    boxTask.style.display = "block";
+    backgroundOverlay.style.display = "block";
+  }
+
+  closeButton?.addEventListener("click", (event) => {
+    event.stopPropagation(); // Остановить всплытие события
+    if (boxTask && backgroundOverlay) {
+      boxTask.style.display = "none"; // Скрыть popup
+      backgroundOverlay.style.display = "none"; // Скрыть фон
+    }
+  });
+  backgroundOverlay?.addEventListener("click", () => {
+    if (boxTask) {
+      boxTask.style.display = "none"; // Скрыть popup
+      backgroundOverlay.style.display = "none"; // Скрыть фон
+    }
+  });
+}
+//кнопка открытия окна списка задач
+btnTask.addEventListener("click", (elem) => {
+  elem.preventDefault();
+  taskWindow();
+});
