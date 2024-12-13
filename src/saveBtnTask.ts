@@ -1,6 +1,6 @@
 import { RunTask } from "./api";
-import { Task } from "./LSCalendarApi";
-import { selected, dateClicked } from "./currentClickDiv";
+import { type Task } from "./api";
+import { dateClicked } from "./currentClickDiv";
 
 //комит
 export async function saveBtnTask() {
@@ -18,7 +18,6 @@ export async function saveBtnTask() {
     const descriptionText = inputTextDescription.value.trim();
     e.preventDefault();
     if (taskText) {
-      
       popupForm.style.display = "none";
       backgroundOverlay.style.display = "none";
       const secureID = crypto.randomUUID();
@@ -60,7 +59,7 @@ function addTaskToList(title: string, description: string, date: string) {
   itemTask.appendChild(dateTask);
 }
 
-function addTaskToCalendar(title: string, description: string, date: string){
+function addTaskToCalendar(title: string, description: string, date: string) {
   const selected = document.querySelector(`[data-date="${date}"]`);
   if (selected) {
     const taskTitle = document.createElement("div");
@@ -71,15 +70,17 @@ function addTaskToCalendar(title: string, description: string, date: string){
 }
 
 function addTask(title: string, description: string, date: string) {
-  addTaskToList(title,  description, date);
+  addTaskToList(title, description, date);
 
   addTaskToCalendar(title, description, date);
 }
 
 function loadTasks() {
-  RunTask.getTasks().forEach((task: Task) => {
-    addTask(task.title, task.description, task.date);
-  });
+  RunTask.getTasks().then((tasks) =>
+    tasks.forEach((task: Task) => {
+      addTask(task.title, task.description, task.date);
+    }),
+  );
 }
 window.onload = loadTasks;
 

@@ -1,12 +1,6 @@
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-  /* completed: boolean; */
-}
+import { type Task, type CalendarApi } from "./api";
 
-export class LSCalendarApi {
+export class LSCalendarApi implements CalendarApi {
   private TaskKey: string;
   /* private currentDate: Date; */
   /* static currentDate: any; */
@@ -22,7 +16,7 @@ export class LSCalendarApi {
     this.year = this.currentDate.getFullYear();
   }
 
-  getTasks(): Task[] {
+  async getTasks(): Promise<Task[]> {
     const data = localStorage.getItem(this.TaskKey); // Получение данных из localStorage
     if (data) {
       try {
@@ -41,8 +35,8 @@ export class LSCalendarApi {
     return []; // Если данных нет или они некорректные, возвращаем пустой массив
   }
 
-  saveTask(task: Task): void {
-    const tasks = this.getTasks(); // Получаем существующие задачи
+  async saveTask(task: Task) {
+    const tasks = await this.getTasks(); // Получаем существующие задачи
     if (!Array.isArray(tasks)) {
       // Проверка, что tasks - это массив
       console.error("Retrieved data is not an array.", tasks);
@@ -52,7 +46,7 @@ export class LSCalendarApi {
     tasks.push(task); // Добавляем новую задачу
     localStorage.setItem(this.TaskKey, JSON.stringify(tasks)); // Сохраняем обновленный массив задач
   }
-  clearTasks(): void {
+  async clearTasks() {
     localStorage.removeItem(this.TaskKey); // Удаляем некорректные данные
   }
 }
