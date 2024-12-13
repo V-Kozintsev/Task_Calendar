@@ -44,6 +44,9 @@ export async function renderCalendar() {
   for (let cells = 1; cells <= dayInMonth; cells++) {
     const newCells = document.createElement("div");
     newCells.className = "days";
+    // @todo: проверить данные для даты
+    newCells.setAttribute('data-date', `${cells}.${RunTask.month + 1}.${RunTask.year}`);
+    
     containerCells?.appendChild(newCells);
     const dateCells = document.createElement("div");
     dateCells.className = "date";

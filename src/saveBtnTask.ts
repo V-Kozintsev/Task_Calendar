@@ -18,10 +18,7 @@ export async function saveBtnTask() {
     const descriptionText = inputTextDescription.value.trim();
     e.preventDefault();
     if (taskText) {
-      const taskTitle = document.createElement("div");
-      taskTitle.className = "taskInCells";
-      selected.appendChild(taskTitle);
-      taskTitle.textContent = taskText;
+      
       popupForm.style.display = "none";
       backgroundOverlay.style.display = "none";
       const secureID = crypto.randomUUID();
@@ -41,7 +38,7 @@ export async function saveBtnTask() {
   });
 }
 
-function addTask(title: string, description: string, date: string) {
+function addTaskToList(title: string, description: string, date: string) {
   const boxTask = document.getElementById("box-task");
   const itemTask = document.createElement("div"); //коробка для данных
   itemTask.className = "item-task";
@@ -62,6 +59,23 @@ function addTask(title: string, description: string, date: string) {
   dateTask.innerText = date;
   itemTask.appendChild(dateTask);
 }
+
+function addTaskToCalendar(title: string, description: string, date: string){
+  const selected = document.querySelector(`[data-date="${date}"]`);
+  if (selected) {
+    const taskTitle = document.createElement("div");
+    taskTitle.className = "taskInCells";
+    selected.appendChild(taskTitle);
+    taskTitle.textContent = title;
+  }
+}
+
+function addTask(title: string, description: string, date: string) {
+  addTaskToList(title,  description, date);
+
+  addTaskToCalendar(title, description, date);
+}
+
 function loadTasks() {
   RunTask.getTasks().forEach((task: Task) => {
     addTask(task.title, task.description, task.date);
