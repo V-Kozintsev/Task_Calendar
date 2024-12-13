@@ -15,6 +15,7 @@ li {
   height: 100vh;
   width: 100%;
 }
+
 .container_calendar__box-header {
   display: flex;
   justify-content: space-between;
@@ -26,9 +27,17 @@ li {
   display: flex;
 }
 .month {
-  font-size: 24px;
+  /* font-size: 24px;
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
+  font-weight: bold; */
+  font:
+    400 22px / 28px "Google Sans",
+    Roboto,
+    Arial,
+    sans-serif;
+}
+.month:first-letter {
+  text-transform: uppercase;
 }
 .next_month_btn {
   margin: 0px 30px;
@@ -89,7 +98,7 @@ li {
   text-decoration: none;
   color: black;
   width: 100px;
-  border: 1px solid black;
+  border: 1px solid rgb(167, 167, 167);
   text-align: center;
   padding: 5px;
   border-radius: 10px;
@@ -107,9 +116,6 @@ li {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.box_task {
-  border: 1px solid red;
-}
 .currentDay {
   display: inline-flex;
   justify-content: center;
@@ -157,11 +163,11 @@ li {
 .popup {
   position: absolute;
   display: none;
+  z-index: 999;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 10);
   flex-direction: column;
   align-items: end;
-  z-index: 999;
   background-color: #f2f2f2;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 10);
   width: 30%;
   height: 30%;
   top: 50%;
@@ -178,7 +184,7 @@ li {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: none; /* Скрыть по умолчанию */
-  z-index: 998; /* Чуть ниже чем popup */
+  /* z-index: 50; /* Чуть ниже чем popup */
 }
 .input_value {
   width: 80%;
@@ -213,10 +219,15 @@ li {
   border-bottom: 3px solid #0b57d0; /* серый цвет нижней рамки */
   background-color: #b9b9b9;
 }
-.task-title:hover {
-  background-color: #b9b9b9;
+.dateMonthYear {
+  color: #747474;
+  font-weight: 600;
 }
-.close-btn {
+.task-title:hover {
+  background-color: #c4c7c5;
+}
+.close-btn,
+.close-btn-task {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -224,7 +235,8 @@ li {
   width: 20px;
   height: 20px;
 }
-.close-btn:hover {
+.close-btn:hover,
+.close-btn-task:hover {
   cursor: pointer;
   border-radius: 50%;
   background-color: #c4c7c5;
@@ -242,4 +254,56 @@ li {
   height: 300px;
   top: 0;
   left: 0;
+}
+.date {
+  height: 24px;
+  width: 24px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-bottom: 3px;
+  border-radius: 50%;
+}
+.curDate {
+  margin: 0 auto;
+  margin-bottom: 3px;
+  color: white;
+  background-color: #0b57d0;
+}
+
+.task-block {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 80vh;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  display: none;
+  /* z-index: 997; */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 10);
+}
+.text-header-task {
+  font-size: 18px;
+}
+.item-task {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #464646;
+  font-weight: 600;
+}
+.title-task,
+.description-task {
+  margin-bottom: 4px;
+}
+.box-btnAndText {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
 }

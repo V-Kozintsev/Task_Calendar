@@ -22,10 +22,10 @@ const config = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
-    new HtmlWebpackPlugin({
+    /* new HtmlWebpackPlugin({
       template: "./src/task.html", // Обеспечьте создание страниц через Webpack
       filename: "task.html",
-    }),
+    }), */
 
     new MiniCssExtractPlugin(),
   ],

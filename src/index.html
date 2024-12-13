@@ -14,8 +14,8 @@
           <div id="month" class="month"></div>
         </div>
         <div class="container_calendar__box-header_btn-task-calendar">
-          <a href="index.html" id="calendar" class="button">календарь</a>
-          <a href="task.html" id="task" class="button">задачи</a>
+          <!-- <a href="index.html" id="calendar" class="button">календарь</a> -->
+          <button id="task" class="button">задачи</button>
         </div>
       </div>
       <div class="container_calendar__box-center">
@@ -40,6 +40,7 @@
             required
           />
           <div id="month_popup" class="month_popup"></div>
+          <div class="dateMonthYear"></div>
           <textarea
             class="task-title"
             id="task-description"
@@ -50,6 +51,21 @@
           <button id="btnClosed">закрыть</button>
         </form>
         <div class="window-background"></div>
+        <button class="delete">удалить</button>
+        <button class="read">показать</button>
+        <div id="task-block" class="task-block">
+          <div class="box-btnAndText">
+            <p class="text-header-task">Мои задачи</p>
+            <span class="close-btn-task">&times;</span>
+          </div>
+          <div id="box-task" class="box-task">
+            <!-- <div class="item-task">
+              <div class="title-task">Название</div>
+              <div class="description-task">Описание</div>
+              <div class="date-task">12.12.2024</div>
+            </div> -->
+          </div>
+        </div>
       </div>
     </div>
   </body>
