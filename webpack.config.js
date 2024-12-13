@@ -9,7 +9,10 @@ const isProduction = process.env.NODE_ENV == "production";
 const stylesHandler = MiniCssExtractPlugin.loader;
 
 const config = {
-  entry: "./src/index.ts",
+  entry: {
+    app: "./src/index.ts",
+    task: "./src/task.ts",
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
   },
@@ -21,11 +24,13 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
+      chunks: ["app"],
     }),
-    /* new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: "./src/task.html", // Обеспечьте создание страниц через Webpack
       filename: "task.html",
-    }), */
+      chunks: ["task"],
+    }),
 
     new MiniCssExtractPlugin(),
   ],

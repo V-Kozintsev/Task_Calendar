@@ -1,4 +1,4 @@
-import { currentDateHolder, RunTask } from "./api";
+import { currentDateHolder } from "./api";
 import { renderCalendar } from "./index";
 
 export function nextMonth() {
