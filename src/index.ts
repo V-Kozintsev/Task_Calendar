@@ -1,6 +1,6 @@
 import "./main.css";
 
-import { RunTask } from "./api";
+import { currentDateHolder, RunTask } from "./api";
 import { updateMonthYearDisplay } from "./updateMonthYearDisplay";
 import { currentClickDiv } from "./currentClickDiv";
 import { saveBtnTask } from "./saveBtnTask";
@@ -9,15 +9,16 @@ import { nextMonth, prevMonth } from "./nextMonthAndPrevMonth";
 export const currentMonth = document.getElementById("month") as HTMLDivElement;
 const btnTask = document.getElementById("task") as HTMLDivElement;
 
+
 export async function renderCalendar() {
   const containerCells = document.querySelector(
     ".container_calendar__box-day",
   ) as HTMLDivElement;
   containerCells.innerHTML = "";
 
-  const firstDayIndex = new Date(RunTask.year, RunTask.month, 1).getDay();
-  const dayInMonth = new Date(RunTask.year, RunTask.month + 1, 0).getDate(); //общее кол-во дней текущего месяца
-  const prevMonthDays = new Date(RunTask.year, RunTask.month, 0).getDate(); //общее кол-во дней предыдущего месяца
+  const firstDayIndex = new Date(currentDateHolder.year, currentDateHolder.month, 1).getDay();
+  const dayInMonth = new Date(currentDateHolder.year, currentDateHolder.month + 1, 0).getDate(); //общее кол-во дней текущего месяца
+  const prevMonthDays = new Date(currentDateHolder.year, currentDateHolder.month, 0).getDate(); //общее кол-во дней предыдущего месяца
   const weeks = (firstDayIndex + 6) % 7;
   let prevMonthDaysCells = prevMonthDays - weeks;
   let numberPrev = 0;
@@ -45,7 +46,7 @@ export async function renderCalendar() {
     const newCells = document.createElement("div");
     newCells.className = "days";
     // @todo: проверить данные для даты
-    newCells.setAttribute('data-date', `${cells}.${RunTask.month + 1}.${RunTask.year}`);
+    newCells.setAttribute('data-date', `${cells}.${currentDateHolder.month + 1}.${currentDateHolder.year}`);
     
     containerCells?.appendChild(newCells);
     const dateCells = document.createElement("div");

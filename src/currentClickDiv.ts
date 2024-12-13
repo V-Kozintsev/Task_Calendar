@@ -1,4 +1,4 @@
-import { RunTask } from "./api";
+import { currentDateHolder, RunTask } from "./api";
 export let selected: HTMLDivElement;
 export let dateClicked: string;
 
@@ -6,7 +6,7 @@ export async function currentClickDiv(cell: HTMLDivElement) {
   const dateMonthYear = document.querySelector(
     ".dateMonthYear",
   ) as HTMLDivElement;
-  const dayMonthYear = new Date(RunTask.year, RunTask.month);
+  const dayMonthYear = new Date(currentDateHolder.year, currentDateHolder.month);
   const currentDayCalendar = dayMonthYear.toLocaleDateString("ru-Ru", {
     month: "numeric",
     year: "numeric",

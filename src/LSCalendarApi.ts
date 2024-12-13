@@ -4,16 +4,9 @@ export class LSCalendarApi implements CalendarApi {
   private TaskKey: string;
   /* private currentDate: Date; */
   /* static currentDate: any; */
-  currentDate = new Date();
-  year: number;
-  month: number;
 
   constructor() {
     this.TaskKey = "tasks";
-
-    this.currentDate = new Date();
-    this.month = this.currentDate.getMonth();
-    this.year = this.currentDate.getFullYear();
   }
 
   async getTasks(): Promise<Task[]> {
