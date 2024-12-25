@@ -9,7 +9,12 @@
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4); /* Полупрозрачный фон */
 }
-
+.titleInput {
+  width: 100%;
+}
+.descriptionInput {
+  width: 100%;
+}
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto;

@@ -9,18 +9,16 @@ const MyFullCalendar: React.FC = () => {
 
   const handleDateClick = (arg: DateClickArg) => {
     setSelectedDate(arg.dateStr); // Сохраняем выбранную дату
-    setIsOpen(true); // Открываем модальное окно
+    setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsOpen(false);
   };
-
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Обработка отправки формы
     console.log("Форма отправлена для даты: ", selectedDate);
-    closeModal(); // Закрываем модальное окно после отправки
+    closeModal();
   };
 
   return (
@@ -39,7 +37,6 @@ const MyFullCalendar: React.FC = () => {
         dateClick={handleDateClick}
       />
 
-      {/* Модальное окно */}
       {isOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -50,13 +47,15 @@ const MyFullCalendar: React.FC = () => {
             <form onSubmit={handleSubmit}>
               <label>
                 Заголовок:
-                <input type="text" required />
+                <input className="titleInput" type="text" required />
               </label>
               <label>
                 Описание:
-                <textarea required></textarea>
+                <textarea className="descriptionInput"></textarea>
               </label>
-              <button type="submit">Сохранить</button>
+              <button className="btnSave" type="submit">
+                Сохранить
+              </button>
             </form>
           </div>
         </div>
