@@ -1,3 +1,4 @@
+// storage/LocalStorageTaskStorage.ts
 import { Task, StoringTasks, FilterCriteria } from "../interfaces/ITaskStorage";
 
 class LocalStorageTaskStorage implements StoringTasks {
@@ -5,7 +6,11 @@ class LocalStorageTaskStorage implements StoringTasks {
 
   private async getAllTasks(): Promise<Task[]> {
     const storedTasks = localStorage.getItem(this.storageKey);
-    return storedTasks ? JSON.parse(storedTasks) : [];
+    const tasks = storedTasks ? JSON.parse(storedTasks) : [];
+    return tasks.map((task: { date: string | number | Date }) => ({
+      ...task,
+      date: new Date(task.date), // Преобразуем строку в объект Date
+    }));
   }
 
   async create(task: Task): Promise<void> {
@@ -53,10 +58,10 @@ class LocalStorageTaskStorage implements StoringTasks {
         : true;
 
       // Фильтрация по тегам
-      const tagsMatch =
+      /* const tagsMatch =
         criteria.tags && criteria.tags.length > 0
           ? criteria.tags.some((tag) => task.tags.includes(tag))
-          : true;
+          : true; */
 
       // Фильтрация по диапазону дат
       const dateMatches = criteria.dateRange
@@ -66,9 +71,9 @@ class LocalStorageTaskStorage implements StoringTasks {
         : true;
 
       // Возвращаем true, если задача соответствует всем критериям
-      return titleMatches && statusMatches && tagsMatch && dateMatches;
+      return titleMatches && statusMatches /* && tagsMatch */ && dateMatches;
     });
   }
 }
-
-export default storage = new LocalStorageTaskStorage();
+const storage = new LocalStorageTaskStorage();
+export default storage;

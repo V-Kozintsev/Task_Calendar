@@ -1,10 +1,11 @@
+// ITaskStorage.ts
 export interface Task {
   id: string;
   title: string;
   description: string;
   date: Date;
-  status: "pending" | "complited";
-  tags: string[];
+  status: "В ожидании" | "Завершено"; // Исправлено на 'completed'
+  /* tags: string[]; */
 }
 
 export interface StoringTasks {
@@ -17,7 +18,7 @@ export interface StoringTasks {
 
 export interface FilterCriteria {
   title?: string;
-  status?: "pending" | "completed";
+  status?: "В ожидании" | "Завершено";
   tags?: string[];
   dateRange?: {
     start?: Date;
