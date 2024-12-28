@@ -1,24 +1,26 @@
-// src/interfaces/ITaskStorage.ts
 export interface Task {
   id: string;
   title: string;
   description: string;
-  dueDate: Date;
-  status: "pending" | "completed";
+  date: Date;
+  status: "pending" | "complited";
   tags: string[];
 }
 
-export interface ITaskStorage {
-  create(task: Task): Promise<Task>;
-  read(taskId: string): Promise<Task | null>;
-  update(taskId: string, updatedTask: Task): Promise<Task | null>;
-  delete(taskId: string): Promise<boolean>;
-  filter(filterOptions: FilterOptions): Promise<Task[]>;
+export interface StoringTasks {
+  create(task: Task): Promise<void>;
+  read(id: string): Promise<Task | null>;
+  update(task: Task): Promise<void>;
+  delete(id: string): Promise<void>;
+  filter(criteria: FilterCriteria): Promise<Task[]>;
 }
 
-export interface FilterOptions {
-  text?: string;
-  date?: Date;
+export interface FilterCriteria {
+  title?: string;
   status?: "pending" | "completed";
   tags?: string[];
+  dateRange?: {
+    start?: Date;
+    end?: Date;
+  };
 }

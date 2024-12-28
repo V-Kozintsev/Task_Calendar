@@ -1,64 +1,74 @@
-// src/storage/LocalStorageTaskStorage.ts
-import { ITaskStorage, Task, FilterOptions } from "../interfaces/ITaskStorage";
+import { Task, StoringTasks, FilterCriteria } from "../interfaces/ITaskStorage";
 
-export class LocalStorageTaskStorage implements ITaskStorage {
+class LocalStorageTaskStorage implements StoringTasks {
   private storageKey = "tasks";
 
-  private loadTasks(): Task[] {
-    const tasksJson = localStorage.getItem(this.storageKey);
-    return tasksJson ? JSON.parse(tasksJson) : [];
+  private async getAllTasks(): Promise<Task[]> {
+    const storedTasks = localStorage.getItem(this.storageKey);
+    return storedTasks ? JSON.parse(storedTasks) : [];
   }
 
-  private saveTasks(tasks: Task[]): void {
+  async create(task: Task): Promise<void> {
+    const tasks = await this.getAllTasks();
+    tasks.push(task);
     localStorage.setItem(this.storageKey, JSON.stringify(tasks));
   }
 
-  public async create(task: Task): Promise<Task> {
-    const tasks = this.loadTasks();
-    tasks.push(task);
-    this.saveTasks(tasks);
-    return task;
+  async read(id: string): Promise<Task | null> {
+    const tasks = await this.getAllTasks();
+    const foundTask = tasks.find((task) => task.id === id);
+    return foundTask || null; // Возвращаем найденную задачу или null
   }
 
-  public async read(taskId: string): Promise<Task | null> {
-    const tasks = this.loadTasks();
-    return tasks.find((task) => task.id === taskId) || null;
+  async update(updatedTask: Task): Promise<void> {
+    const tasks = await this.getAllTasks();
+    const taskIndex = tasks.findIndex((task) => task.id === updatedTask.id);
+
+    if (taskIndex !== -1) {
+      tasks[taskIndex] = updatedTask; // Обновляем задачу
+      localStorage.setItem(this.storageKey, JSON.stringify(tasks)); // Сохраняем изменения
+    } else {
+      throw new Error("Task not found");
+    }
   }
 
-  public async update(taskId: string, updatedTask: Task): Promise<Task | null> {
-    const tasks = this.loadTasks();
-    const taskIndex = tasks.findIndex((task) => task.id === taskId);
-    if (taskIndex === -1) return null;
-
-    tasks[taskIndex] = updatedTask;
-    this.saveTasks(tasks);
-    return updatedTask;
+  async delete(id: string): Promise<void> {
+    const tasks = await this.getAllTasks();
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    localStorage.setItem(this.storageKey, JSON.stringify(updatedTasks)); // Сохраняем изменения
   }
 
-  public async delete(taskId: string): Promise<boolean> {
-    const tasks = this.loadTasks();
-    const newTasks = tasks.filter((task) => task.id !== taskId);
-    this.saveTasks(newTasks);
-    return tasks.length !== newTasks.length;
-  }
+  async filter(criteria: FilterCriteria): Promise<Task[]> {
+    const tasks = await this.getAllTasks();
 
-  public async filter(filterOptions: FilterOptions): Promise<Task[]> {
-    const tasks = this.loadTasks();
     return tasks.filter((task) => {
-      const matchesText = filterOptions.text
-        ? task.title.includes(filterOptions.text) ||
-          task.description.includes(filterOptions.text)
+      // Фильтрация по заголовку
+      const titleMatches = criteria.title
+        ? task.title.toLowerCase().includes(criteria.title.toLowerCase())
         : true;
-      const matchesDate = filterOptions.date
-        ? task.dueDate.toDateString() === filterOptions.date.toDateString()
+
+      // Фильтрация по статусу
+      const statusMatches = criteria.status
+        ? task.status === criteria.status
         : true;
-      const matchesStatus = filterOptions.status
-        ? task.status === filterOptions.status
+
+      // Фильтрация по тегам
+      const tagsMatch =
+        criteria.tags && criteria.tags.length > 0
+          ? criteria.tags.some((tag) => task.tags.includes(tag))
+          : true;
+
+      // Фильтрация по диапазону дат
+      const dateMatches = criteria.dateRange
+        ? (!criteria.dateRange.start ||
+            task.date >= criteria.dateRange.start) &&
+          (!criteria.dateRange.end || task.date <= criteria.dateRange.end)
         : true;
-      const matchesTags = filterOptions.tags
-        ? filterOptions.tags.some((tag) => task.tags.includes(tag))
-        : true;
-      return matchesText && matchesDate && matchesStatus && matchesTags;
+
+      // Возвращаем true, если задача соответствует всем критериям
+      return titleMatches && statusMatches && tagsMatch && dateMatches;
     });
   }
 }
+
+export default storage = new LocalStorageTaskStorage();
