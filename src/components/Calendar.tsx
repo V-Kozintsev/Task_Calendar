@@ -6,6 +6,7 @@ import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import { Task } from "../interfaces/ITaskStorage";
 import storage from "../storage/LocalStorageTaskStorage";
 import Fuse from "fuse.js";
+import { TaskStatus } from "../interfaces/IStatus";
 
 export const MyFullCalendar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +59,7 @@ export const MyFullCalendar: React.FC = () => {
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (selectedTask) {
-      const newStatus = event.target.value as "В ожидании" | "Завершено"; // Приведение типа
+      const newStatus = event.target.value as TaskStatus; // Приведение типа
       setSelectedTask({ ...selectedTask, status: newStatus });
     }
   };
@@ -110,7 +111,7 @@ export const MyFullCalendar: React.FC = () => {
       title: titleInput,
       description: descriptionInput,
       date: new Date(selectedDate),
-      status: "В ожидании",
+      status: TaskStatus.PENDING,
     };
     await saveData(newTask);
     closeModal();
@@ -218,8 +219,10 @@ export const MyFullCalendar: React.FC = () => {
               />
               <select value={filterStatus} onChange={handleStatusFilterChange}>
                 <option value="">Все статусы</option>
-                <option value="В ожидании">В ожидании</option>
-                <option value="Завершено">Завершены</option>
+                <option value={TaskStatus.PENDING}>{TaskStatus.PENDING}</option>
+                <option value={TaskStatus.COMPLETED}>
+                  {TaskStatus.COMPLETED}
+                </option>
               </select>
               <label>
                 Начало:

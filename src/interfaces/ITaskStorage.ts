@@ -1,10 +1,11 @@
 // ITaskStorage.ts
+import { TaskStatus } from "./IStatus";
 export interface Task {
   id: string;
   title: string;
   description: string;
   date: Date;
-  status: "В ожидании" | "Завершено"; // Исправлено на 'completed'
+  status: TaskStatus; // Исправлено на 'completed'
   /* tags: string[]; */
 }
 
@@ -18,7 +19,7 @@ export interface StoringTasks {
 
 export interface FilterCriteria {
   title?: string;
-  status?: "В ожидании" | "Завершено";
+  status?: TaskStatus;
   tags?: string[];
   dateRange?: {
     start?: Date;
