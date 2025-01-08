@@ -4,6 +4,7 @@
   "description": "calendar development",
   "main": "index.js",
   "scripts": {
+    "build": "npm run test && webpack --mode=production --node-env=production",
     "test": "jest --coverage",
     "coveralls": "npm run coverage",
     "coverage": "type .\\coverage\\lcov.info | coveralls",
