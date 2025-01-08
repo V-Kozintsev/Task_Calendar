@@ -1,7 +1,6 @@
+import { /* describe, */ expect, test } from "@jest/globals";
 import { sum } from "./sum";
 
-describe("dsum", () => {
-  it("описание", () => {
-    expect(sum(2, 3)).toBe(5);
-  });
+test("хочу сложить 2 + 2", () => {
+  expect(sum(2, 2)).toBe(4);
 });
