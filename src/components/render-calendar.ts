@@ -29,7 +29,7 @@ export function createCalendar() {
     ).value;
     const endDateFilter = (
       document.getElementById("end-date") as HTMLInputElement
-    ).value;
+    ).value; //комит
 
     // Фильтруем задачи
     const filteredTasks = await apiTask.filterTasks(
