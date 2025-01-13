@@ -37,6 +37,33 @@
         <span class="close-popupTasks" id="close-popupTasks">&times;</span>
         <h2>Добавленные задачи</h2>
         <div class="listTask" id="taskContainer"></div>
+        <div class="filter-controls">
+          <input
+            type="text"
+            id="filter-title"
+            placeholder="Фильтр по заголовку ..."
+          />
+          <input
+            type="text"
+            id="filter-tags"
+            placeholder="Фильтр по тегам ..."
+          />
+          <input type="date" id="filter-date" />
+          <button id="filter-btn">Применить фильтрацию</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="popupTaskDetail" id="task-popupDetail">
+      <div class="popup-contentTaskDetail">
+        <span class="close-popupDetail" id="close-popupDetail">&times;</span>
+        <h2>Детали задачи</h2>
+        <label for="edit-title">Заголовок:</label>
+        <input type="text" id="edit-title" />
+        <label for="edit-description">Описание:</label>
+        <textarea id="edit-description"></textarea>
+        <button id="save-changes">Сохранить изменения</button>
+        <button id="delete-task">Удалить задачу</button>
       </div>
     </div>
   </body>
