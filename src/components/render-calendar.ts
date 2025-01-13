@@ -1,6 +1,6 @@
+//файл render-calendar.ts
 import { CalendarManager } from "./localStorageManager.ts";
 import { Task } from "./interface";
-/* import Fuse from "fuse.js"; */
 
 export function createCalendar() {
   const apiTask = new CalendarManager();
@@ -11,26 +11,35 @@ export function createCalendar() {
 
   const listTask = document.getElementById("taskContainer") as HTMLDivElement;
 
-  function renderTasks() {
+  // Функция для рендеринга задач
+  async function renderTasks() {
     listTask.innerHTML = "";
-    const lastTask: Task[] = apiTask.showTask(); // Явно указываем тип
+    const lastTask: Task[] = await apiTask.showTask();
     const tasksByDate: Record<string, Task[]> = {};
+
+    // Получаем фильтры
     const titleFilter = (
       document.getElementById("filter-title") as HTMLInputElement
     ).value.trim();
     const tagsFilter = (
       document.getElementById("filter-tags") as HTMLInputElement
     ).value.trim();
-    const dateFilter = (
-      document.getElementById("filter-date") as HTMLInputElement
+    const startDateFilter = (
+      document.getElementById("start-date") as HTMLInputElement
+    ).value;
+    const endDateFilter = (
+      document.getElementById("end-date") as HTMLInputElement
     ).value;
 
-    const filteredTasks = apiTask.filterTasks(
+    // Фильтруем задачи
+    const filteredTasks = await apiTask.filterTasks(
       titleFilter,
       tagsFilter,
-      dateFilter,
+      startDateFilter,
+      endDateFilter,
     );
 
+    // Проходим по отфильтрованным задачам и добавляем их в список
     filteredTasks.forEach((task) => {
       const taskElement = document.createElement("div");
       taskElement.classList.add("task");
@@ -53,6 +62,7 @@ export function createCalendar() {
       listTask.appendChild(taskElement);
     });
 
+    // Функция для открытия попапа редактирования задачи
     function openTaskDetailPopup(task: Task) {
       const taskPopupDetail = document.getElementById(
         "task-popupDetail",
@@ -64,108 +74,79 @@ export function createCalendar() {
         "edit-description",
       ) as HTMLTextAreaElement;
 
-      // Заполняем поля ввода текущими значениями задачи
-      titleInput.value = task.title;
-      descriptionInput.value = task.description;
+      titleInput.value = task.title; // Заполняем заголовок
+      descriptionInput.value = task.description; // Заполняем описание
 
       // Показываем попап
       taskPopupDetail.style.display = "block";
 
-      // Обработка кнопки "Сохранить изменения"
+      // Настраиваем обработчик для кнопки "Сохранить изменения"
       const saveChangesButton = document.getElementById(
         "save-changes",
       ) as HTMLButtonElement;
-      saveChangesButton.onclick = () => {
+      saveChangesButton.onclick = async () => {
         const newTitle = titleInput.value.trim();
         const newDescription = descriptionInput.value.trim();
 
         if (newTitle && newDescription) {
-          apiTask.editTask(task.title, newTitle, newDescription);
-          renderTasks(); // Обновляем отображение задач после редактирования
+          await apiTask.editTask(task.title, newTitle, newDescription);
+          await renderTasks(); // Обновляем задачи
           taskPopupDetail.style.display = "none"; // Закрываем попап
         } else {
           alert("Пожалуйста, заполните все поля.");
         }
       };
 
-      // Кнопка "Удалить задачу"
+      // Настраиваем обработчик для кнопки "Удалить задачу"
       const deleteButton = document.getElementById(
         "delete-task",
       ) as HTMLButtonElement;
-      deleteButton.onclick = () => {
-        apiTask.deleteTask(task.title); // Удаляем задачу по заголовку
-        renderTasks(); // Обновляем отображение задач после удаления
+      deleteButton.onclick = async () => {
+        await apiTask.deleteTask(task.title);
+        await renderTasks(); // Обновляем задачи
         taskPopupDetail.style.display = "none"; // Закрываем попап
       };
 
-      // Показываем попап
-      taskPopupDetail.style.display = "block";
+      // Обработчик для закрытия попапа
+      const closePopupDetail = document.getElementById(
+        "close-popupDetail",
+      ) as HTMLSpanElement;
+      closePopupDetail?.addEventListener("click", () => {
+        taskPopupDetail.style.display = "none"; // Скрываем попап
+      });
     }
 
-    // Обработчик для закрытия попапа
-    const closePopupDetail = document.getElementById(
-      "close-popupDetail",
-    ) as HTMLSpanElement;
-
-    closePopupDetail?.addEventListener("click", () => {
-      const taskPopupDetail = document.getElementById(
-        "task-popupDetail",
-      ) as HTMLDivElement;
-      taskPopupDetail.style.display = "none"; // Скрываем попап
-    });
-
     lastTask.forEach((task) => {
-      const date = task.date; // Используем дату, назначенную для задачи из календаря
+      const date = task.date;
       if (!tasksByDate[date]) {
         tasksByDate[date] = [];
       }
       tasksByDate[date].push(task);
-
-      // Создаем элемент для задачи
-      const taskElement = document.createElement("div");
-      taskElement.classList.add("task");
-
-      const titleElement = document.createElement("h3");
-      titleElement.textContent = task.title;
-      titleElement.addEventListener("click", () => {
-        openTaskDetailPopup(task); // Передаем текущую задачу в функцию открытия попапа
-      });
-
-      const descriptionElement = document.createElement("p");
-      descriptionElement.textContent = task.description;
-
-      const assignedDateElement = document.createElement("p"); // Изменяем название для ясности
-      assignedDateElement.textContent = `Назначенная дата: ${task.date}`; // Отображаем дату, назначенную в календаре
-
-      taskElement.appendChild(titleElement);
-      taskElement.appendChild(descriptionElement);
-      taskElement.appendChild(assignedDateElement); // Добавляем элемент назначенной даты в задачу
-      listTask.appendChild(taskElement);
     });
+
     const filterButton = document.getElementById(
       "filter-btn",
     ) as HTMLButtonElement;
-    filterButton.addEventListener("click", () => {
-      renderTasks();
-    });
+    filterButton.onclick = async () => {
+      await renderTasks(); // Перерисовываем только отфильтрованные задачи
+    };
 
     const calendarCells = document.querySelectorAll(
       ".calendar-cell[data-date]",
     );
     calendarCells.forEach((cell) => {
       const date = cell.getAttribute("data-date");
-
-      if (!date) return; // Прекращаем выполнение, если даты нет
+      if (!date) return;
 
       const fullDate = `${currentYear}-${currentMonth + 1}-${date}`;
 
-      // Удаляем существующий список задач, если он есть
+      // Удаляем список задач, если он есть
       const existingTasksList = cell.querySelector(".tasks-list");
       if (existingTasksList) {
         existingTasksList.remove();
       }
 
-      // Если есть задачи для текущей даты, создаем и добавляем новый элемент списка задач
+      // Создаем новый элемент списка задач
       const tasks = tasksByDate[fullDate];
       if (tasks) {
         const tasksElement = document.createElement("div");
@@ -176,19 +157,20 @@ export function createCalendar() {
           taskTitleElement.className = "current-task";
           taskTitleElement.textContent = task.title;
           taskTitleElement.addEventListener("click", () => {
-            openTaskDetailPopup(task); // Вызываем попап для задачи
+            openTaskDetailPopup(task);
           });
           tasksElement.appendChild(taskTitleElement);
         });
 
-        cell.appendChild(tasksElement); // Добавляем элементы задач в ячейку
+        cell.appendChild(tasksElement);
       }
     });
   }
+
   renderTasks();
 
   const saveTask = document.getElementById("save-task");
-  saveTask?.addEventListener("click", (e) => {
+  saveTask?.addEventListener("click", async (e) => {
     e.preventDefault();
     const taskTitle = document.getElementById("task-title") as HTMLInputElement;
     const taskDescription = document.getElementById(
@@ -199,12 +181,12 @@ export function createCalendar() {
     const description = taskDescription.value.trim();
 
     if (title && description && selectedDate) {
-      apiTask.createTask(title, description, selectedDate);
-      renderTasks();
+      await apiTask.createTask(title, description, selectedDate);
+      await renderTasks();
       taskTitle.value = "";
       taskDescription.value = "";
+      selectedDate = null; // Сбрасываем выбранную дату
     }
-    selectedDate = null;
   });
 
   function renderCalendar() {
@@ -220,7 +202,7 @@ export function createCalendar() {
       year: "numeric",
     });
 
-    calendarGrid.innerHTML = "";
+    calendarGrid.innerHTML = ""; // Очищаем сетку календаря
 
     // Добавление заголовков дней недели
     const daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
@@ -270,25 +252,14 @@ export function createCalendar() {
 
     function openPopup() {
       if (taskPopup) {
-        // Очистим предыдущее значение перед открытием
-        const taskTitle = document.getElementById(
-          "task-title",
-        ) as HTMLInputElement;
-        const taskDescription = document.getElementById(
-          "task-description",
-        ) as HTMLTextAreaElement;
-
-        taskTitle.value = ""; // Очищаем поле заголовка
-        taskDescription.value = ""; // Очищаем описания
-
-        taskPopup.style.display = "block";
+        taskPopup.style.display = "block"; // Показываем попап задач
       }
     }
 
     function closePopupHandler() {
       if (taskPopup) {
-        taskPopup.style.display = "none";
-        selectedDate = null; // Обнуляем выбранную дату при закрытии
+        taskPopup.style.display = "none"; // Скрываем попап
+        selectedDate = null; // Сбрасываем выбранную дату при закрытии
       }
     }
 
@@ -296,21 +267,15 @@ export function createCalendar() {
 
     dateCells.forEach((cell) => {
       cell.addEventListener("click", (e) => {
-        // Проверяем, произошло ли это на элементах с классом tasks-list
         const target = e.target as HTMLElement;
 
         if (!target.closest(".tasks-list")) {
           const date = cell.getAttribute("data-date");
 
           if (date) {
-            console.log(`Выбранная дата: ${date}`);
             selectedDate = `${currentYear}-${currentMonth + 1}-${date}`;
             openPopup();
-          } else {
-            console.log("Атрибут data-date не найден.");
           }
-        } else {
-          console.log("Вы кликнули по задачам, попап не будет открыт.");
         }
       });
     });
@@ -324,14 +289,14 @@ export function createCalendar() {
     ) as HTMLDivElement;
 
     btnTasks.addEventListener("click", () => {
-      popupTasks.style.display = "block";
+      popupTasks.style.display = "block"; // Показываем попап со списком задач
     });
 
     closeTasks.addEventListener("click", () => {
-      popupTasks.style.display = "none";
+      popupTasks.style.display = "none"; // Скрываем попап со списком задач
     });
 
-    renderTasks();
+    renderTasks(); // Рендерим задачи на календаре
   }
 
   function changeMonth(change: number) {
@@ -344,8 +309,8 @@ export function createCalendar() {
       currentYear--;
     }
 
-    currentDate.setFullYear(currentYear, currentMonth); // Обновляем объект date
-    renderCalendar();
+    currentDate.setFullYear(currentYear, currentMonth);
+    renderCalendar(); // Перерисовываем календарь
   }
 
   document
@@ -355,5 +320,5 @@ export function createCalendar() {
     .querySelector(".control-button-prev")
     ?.addEventListener("click", () => changeMonth(-1));
 
-  renderCalendar();
+  renderCalendar(); // Инициализируем рендеринг календаря
 }

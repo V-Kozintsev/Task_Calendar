@@ -26,6 +26,7 @@
     "@jest/globals": "^29.7.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/user-event": "^14.5.2",
+    "@types/fuzzysearch": "^1.0.2",
     "@types/jest": "^29.5.14",
     "@webpack-cli/generators": "^3.0.7",
     "babel-jest": "^29.7.0",
@@ -55,5 +56,8 @@
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
+  },
+  "dependencies": {
+    "fuzzysearch": "^1.0.3"
   }
 }

@@ -35,8 +35,7 @@
     <div class="popupTasks" id="task-popupTasks">
       <div class="popup-contentTasks">
         <span class="close-popupTasks" id="close-popupTasks">&times;</span>
-        <h2>Добавленные задачи</h2>
-        <div class="listTask" id="taskContainer"></div>
+        <h2>Список задач</h2>
         <div class="filter-controls">
           <input
             type="text"
@@ -48,9 +47,17 @@
             id="filter-tags"
             placeholder="Фильтр по тегам ..."
           />
-          <input type="date" id="filter-date" />
+          <div>
+            <label for="start-date">С:</label>
+            <input type="date" id="start-date" />
+          </div>
+          <div>
+            <label for="end-date">По:</label>
+            <input type="date" id="end-date" />
+          </div>
           <button id="filter-btn">Применить фильтрацию</button>
         </div>
+        <div class="listTask" id="taskContainer"></div>
       </div>
     </div>
 

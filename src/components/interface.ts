@@ -1,3 +1,4 @@
+//файл interface.ts
 export interface Task {
   title: string;
   description: string;

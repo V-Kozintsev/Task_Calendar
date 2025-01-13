@@ -1,4 +1,7 @@
+//файл localStorageManager.ts.ts
 import { Task } from "./interface";
+import fuzzysearch from "fuzzysearch"; // Импорт библиотеки
+
 export class CalendarManager {
   key = "tasks";
   arrayTask: Task[] = []; // Явно указываем тип
@@ -21,7 +24,8 @@ export class CalendarManager {
   filterTasks(
     titleFilter: string,
     tagsFilter: string,
-    dateFilter: string,
+    startDateFilter: string,
+    endDateFilter: string,
   ): Task[] {
     return this.arrayTask.filter((task) => {
       const matchesTitle = titleFilter
@@ -29,18 +33,20 @@ export class CalendarManager {
         : true;
 
       const matchesTags = tagsFilter
-        ? task.tags && this.fuzzyMatch(task.tags, tagsFilter) // Проверяем, определены ли теги
+        ? task.tags && this.fuzzyMatch(task.tags, tagsFilter)
         : true;
 
-      const matchesDate = dateFilter ? task.date === dateFilter : true;
+      const matchesDate =
+        (!startDateFilter ||
+          new Date(task.date) >= new Date(startDateFilter)) &&
+        (!endDateFilter || new Date(task.date) <= new Date(endDateFilter));
 
       return matchesTitle && matchesTags && matchesDate;
     });
   }
 
   fuzzyMatch(str: string, pattern: string): boolean {
-    const regex = new RegExp(pattern.split("").join(".*"), "i");
-    return regex.test(str);
+    return fuzzysearch(pattern.toLowerCase(), str.toLowerCase());
   }
 
   loadTasks() {
