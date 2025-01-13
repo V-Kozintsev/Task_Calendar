@@ -1,4 +1,4 @@
 import "./styles.css";
-import { createCalendar } from "./componets/render-calendar";
+import { createCalendar } from "./components/render-calendar";
 
 createCalendar();

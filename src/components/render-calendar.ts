@@ -1,5 +1,5 @@
-import { CalendarManager } from "../componets/localStorageManager.ts";
-import { Task } from "../componets/interface.js";
+import { CalendarManager } from "../components/localStorageManager.ts";
+import { Task } from "../components/interface.js";
 
 export function createCalendar() {
   const apiTask = new CalendarManager();
@@ -13,11 +13,6 @@ export function createCalendar() {
   function renderTasks() {
     listTask.innerHTML = "";
     const lastTask: Task[] = apiTask.showTask(); // Явно указываем тип
-
-    if (!Array.isArray(lastTask)) {
-      console.error("lastTask is not an array:", lastTask);
-      return;
-    }
     const tasksByDate: Record<string, string[]> = {};
 
     lastTask.forEach((task) => {
@@ -47,18 +42,30 @@ export function createCalendar() {
     );
     calendarCells.forEach((cell) => {
       const date = cell.getAttribute("data-date");
-      if (date) {
-        const fullDate = `${currentYear}-${currentMonth + 1}-${date}`;
-        if (tasksByDate[fullDate]) {
-          const tasksElement = document.createElement("div");
-          tasksElement.classList.add("tasks-list");
-          tasksByDate[fullDate].forEach((title) => {
-            const taskTitleElement = document.createElement("div");
-            taskTitleElement.textContent = title;
-            tasksElement.appendChild(taskTitleElement);
-          });
-          cell.appendChild(tasksElement); // Добавляем элементы задач в ячейку
-        }
+
+      if (!date) return; // Прекращаем выполнение, если даты нет
+
+      const fullDate = `${currentYear}-${currentMonth + 1}-${date}`;
+
+      // Удаляем существующий список задач, если он есть
+      const existingTasksList = cell.querySelector(".tasks-list");
+      if (existingTasksList) {
+        existingTasksList.remove();
+      }
+
+      // Если есть задачи для текущей даты, создаем и добавляем новый элемент списка задач
+      const tasks = tasksByDate[fullDate];
+      if (tasks) {
+        const tasksElement = document.createElement("div");
+        tasksElement.classList.add("tasks-list");
+
+        tasks.forEach((title) => {
+          const taskTitleElement = document.createElement("div");
+          taskTitleElement.textContent = title;
+          tasksElement.appendChild(taskTitleElement);
+        });
+
+        cell.appendChild(tasksElement); // Добавляем элементы задач в ячейку
       }
     });
   }
