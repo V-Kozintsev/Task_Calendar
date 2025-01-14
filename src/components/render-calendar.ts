@@ -1,4 +1,5 @@
-import { CalendarManager } from "./localStorageManager";
+import { CalendarManager } from "./localStorageManager"; //CalendarManager() FirebaseManager()
+/* import { FirebaseManager } from "./firebaseManager"; */
 import { Task } from "./interface";
 
 export async function createCalendar() {
@@ -181,6 +182,8 @@ export async function createCalendar() {
       taskTitle.value = "";
       taskDescription.value = "";
       selectedDate = null; // Сбрасываем выбранную дату
+    } else {
+      alert("Пожалуйста, заполните все поля.");
     }
   });
 

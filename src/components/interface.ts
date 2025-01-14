@@ -1,10 +1,12 @@
+// interface.ts
 export interface Task {
+  id?: string; // Добавлено поле id
   title: string;
   description: string;
-  date: string; // Дата выполнения задачи
-  createdDate: string; // Дата создания задачи
-  tags?: string; // Теги для фильтрации
-  status?: "pending" | "completed"; // Статус задачи (например, ожидает выполнения или выполнена)
+  date: string;
+  createdDate: string;
+  tags?: string;
+  status?: "pending" | "completed";
 }
 
 export interface ICalendarManager {
@@ -14,9 +16,9 @@ export interface ICalendarManager {
     date: string,
     tags?: string,
     status?: "pending" | "completed",
-  ): Promise<void>; // Изменено на Promise<void>
+  ): Promise<void>;
 
-  readTask(title: string): Promise<Task | null>; // Изменено на Promise<Task | null>
+  readTask(title: string): Promise<Task | null>;
 
   updateTask(
     oldTitle: string,
@@ -25,13 +27,13 @@ export interface ICalendarManager {
     newDate?: string,
     newTags?: string,
     newStatus?: "pending" | "completed",
-  ): Promise<void>; // Изменено на Promise<void>
+  ): Promise<void>;
 
-  deleteTask(title: string): Promise<void>; // Изменено на Promise<void>
+  deleteTask(title: string): Promise<void>;
 
-  deleteAllTasks(): Promise<void>; // Изменено на Promise<void>
+  deleteAllTasks(): Promise<void>;
 
-  listTasks(): Promise<Task[]>; // Изменено на Promise<Task[]>
+  listTasks(): Promise<Task[]>;
 
   filterTasks(
     titleFilter?: string,
@@ -39,5 +41,5 @@ export interface ICalendarManager {
     startDateFilter?: string,
     endDateFilter?: string,
     statusFilter?: "pending" | "completed",
-  ): Promise<Task[]>; // Изменено на Promise<Task[]>
+  ): Promise<Task[]>;
 }
