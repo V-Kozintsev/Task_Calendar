@@ -1,8 +1,7 @@
-//файл render-calendar.ts
-import { CalendarManager } from "./localStorageManager.ts";
+import { CalendarManager } from "./localStorageManager";
 import { Task } from "./interface";
 
-export function createCalendar() {
+export async function createCalendar() {
   const apiTask = new CalendarManager();
   const currentDate: Date = new Date();
   let currentMonth: number = currentDate.getMonth();
@@ -29,7 +28,7 @@ export function createCalendar() {
     ).value;
     const endDateFilter = (
       document.getElementById("end-date") as HTMLInputElement
-    ).value; //комит
+    ).value;
 
     // Фильтруем задачи
     const filteredTasks = await apiTask.filterTasks(
@@ -62,7 +61,6 @@ export function createCalendar() {
       listTask.appendChild(taskElement);
     });
 
-    // Функция для открытия попапа редактирования задачи
     function openTaskDetailPopup(task: Task) {
       const taskPopupDetail = document.getElementById(
         "task-popupDetail",
@@ -80,7 +78,6 @@ export function createCalendar() {
       // Показываем попап
       taskPopupDetail.style.display = "block";
 
-      // Настраиваем обработчик для кнопки "Сохранить изменения"
       const saveChangesButton = document.getElementById(
         "save-changes",
       ) as HTMLButtonElement;
@@ -97,7 +94,6 @@ export function createCalendar() {
         }
       };
 
-      // Настраиваем обработчик для кнопки "Удалить задачу"
       const deleteButton = document.getElementById(
         "delete-task",
       ) as HTMLButtonElement;
@@ -107,7 +103,6 @@ export function createCalendar() {
         taskPopupDetail.style.display = "none"; // Закрываем попап
       };
 
-      // Обработчик для закрытия попапа
       const closePopupDetail = document.getElementById(
         "close-popupDetail",
       ) as HTMLSpanElement;
@@ -167,7 +162,7 @@ export function createCalendar() {
     });
   }
 
-  renderTasks();
+  await renderTasks(); // Вызываем асинхронно для инициализации задач
 
   const saveTask = document.getElementById("save-task");
   saveTask?.addEventListener("click", async (e) => {
@@ -182,7 +177,7 @@ export function createCalendar() {
 
     if (title && description && selectedDate) {
       await apiTask.createTask(title, description, selectedDate);
-      await renderTasks();
+      await renderTasks(); // Обновляем отображение задач
       taskTitle.value = "";
       taskDescription.value = "";
       selectedDate = null; // Сбрасываем выбранную дату
@@ -204,7 +199,6 @@ export function createCalendar() {
 
     calendarGrid.innerHTML = ""; // Очищаем сетку календаря
 
-    // Добавление заголовков дней недели
     const daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
     daysOfWeek.forEach((day) => {
       calendarGrid.innerHTML += `<div class="calendar-cell calendar-cell--header">${day}</div>`;
